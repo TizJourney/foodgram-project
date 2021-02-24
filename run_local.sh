@@ -1,1 +1,1 @@
-python manage.py runserver --settings=foodgram.settings_local
+source venv/Scripts/activate & python manage.py runserver --settings=foodgram.settings_local
