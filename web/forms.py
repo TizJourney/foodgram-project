@@ -15,3 +15,7 @@ class RecipeForm(forms.ModelForm):
             'description',
             'image'
             )
+        widgets = {
+            'text': forms.Textarea(),
+            'image': forms.FileInput(),
+        }
