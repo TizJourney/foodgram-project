@@ -9,7 +9,7 @@ class RecipeForm(forms.ModelForm):
         model = Recipe
         fields = (
             'name', 
-            'breakfest_tag', 
+            'breakfast_tag', 
             'lunch_tag', 
             'dinner_tag', 
             'ingredients',

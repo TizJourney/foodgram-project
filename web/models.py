@@ -40,7 +40,7 @@ class Recipe(models.Model):
         db_index=True
     )
 
-    breakfest_tag = models.BooleanField('Завтрак', db_index=True)
+    breakfast_tag = models.BooleanField('Завтрак', db_index=True)
     lunch_tag = models.BooleanField('Обед', db_index=True)
     dinner_tag = models.BooleanField('Ужин', db_index=True)
 

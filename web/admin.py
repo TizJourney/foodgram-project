@@ -10,7 +10,7 @@ class RecipeAdmin(admin.ModelAdmin):
         'pk',
         'name',
         'author',
-        'breakfest_tag',
+        'breakfast_tag',
         'dinner_tag',
         'lunch_tag',
         'time',
