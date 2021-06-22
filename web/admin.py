@@ -6,11 +6,20 @@ from .models import Recipe
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'author', 'tags','time', 'description', 'image')
+    list_display = (
+        'pk',
+        'name',
+        'author',
+        'breakfest_tag',
+        'dinner_tag',
+        'lunch_tag',
+        'time',
+        'description',
+        'image'
+    )
     search_fields = ('name',)
     list_filter = ('pub_date',)
     empty_value_display = '-пусто-'
-
 
 
 admin.site.register(Recipe, RecipeAdmin)

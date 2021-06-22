@@ -26,13 +26,6 @@ class Ingredient(models.Model):
 
 
 class Recipe(models.Model):
-    class Tags(models.TextChoices):
-        BREAKFEAST = ('breakfest', 'завтрак')
-        LUNCH = ('lunch', 'обед')
-        DINNER = ('dinner', 'ужин')
-
-    TAGS_MAX_LENGTH = min(20, max((len(c[0]) for c in Tags.choices)))
-
     name = models.TextField(
         'Название рецепта',
         help_text='Название рецепта. Обязательно к заполнению.'
@@ -47,11 +40,9 @@ class Recipe(models.Model):
         db_index=True
     )
 
-    tags = models.CharField(
-        max_length=TAGS_MAX_LENGTH,
-        choices=Tags.choices,
-        default=Tags.BREAKFEAST,
-    )
+    breakfest_tag = models.BooleanField('Завтрак', db_index=True)
+    lunch_tag = models.BooleanField('Обед', db_index=True)
+    dinner_tag = models.BooleanField('Ужин', db_index=True)
 
     ingredients = models.ManyToManyField(Ingredient, blank=True)
 
