@@ -54,17 +54,25 @@
                 </div>
                 {% elif field.name == 'description' %}
                 <div class="form__group">
-                    <label for="id_description" class="form__label">Описание</label>
+                    <label for="{{ field.id_for_label }}" class="form__label">{{field.label}}</label>
                     <div class="form__field-group">
-                        <textarea name="description" id="id_description" rows="8" class="form__textarea"></textarea>
+                        <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" rows="8" class="form__textarea"></textarea>
                         <span class="form__error"></span>
                     </div>
                 </div>
-                {% else %}
+                {% elif field.name == 'image' %}
+                <div class="form__group">
+                    <span class="form__label">Загрузить фото</span>
+                    <div class="form__field-group">
+                        <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}">
+                        <span class="form__error"></span>
+                    </div>
+                </div>
+                    {% else %}
                 <div class="form__group">
                     <label for="{{ field.id_for_label }}" class="form__label">{{field.label}}</label>
                     <div class="form__field-group">
-                        <input type="{{ field.type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form__input">
+                        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form__input">
                         {% for error in field.errors %}
                         <span class="form__error">{{ error }}</span>
                         {% endfor %}
@@ -72,13 +80,6 @@
                 </div>
                 {% endif %}
             {% endfor %}
-            <div class="form__group">
-                <span class="form__label">Загрузить фото</span>
-                <div class="form__field-group">
-                    <input type="file" name="image" id="id_image">
-                    <span class="form__error"></span>
-                </div>
-            </div>
             <div class="form__footer">
                 <button class="button button_style_blue">Создать рецепт</button>
             </div>
