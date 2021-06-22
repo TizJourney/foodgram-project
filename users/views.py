@@ -1,29 +1,31 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from django.views.generic.edit import FormView, UpdateView
 
 from .forms import RegisterForm
+
+from django.contrib.auth.views import PasswordChangeView, LoginView
+from django.contrib.auth.forms import PasswordChangeForm, AuthenticationForm
 
 
 class Register(CreateView):
     form_class = RegisterForm
-    success_url = reverse_lazy('ua')
-    template_name = 'users/reg.html'
+    success_url = reverse_lazy('index')
+    template_name = 'users/register.html'
 
 
-class Login(CreateView):
-    form_class = RegisterForm
-    success_url = reverse_lazy('ua')
-    template_name = 'users/authForm.html'
+class Login(LoginView):
+    form_class = AuthenticationForm
+    success_url = reverse_lazy('index')
+    template_name = 'users/login.html'
 
 
-class ChangePassword(CreateView):
-    form_class = RegisterForm
-    success_url = reverse_lazy('ua')
+class ChangePassword(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('index')
     template_name = 'users/changePassword.html'
 
 
 class ResetPassword(CreateView):
     form_class = RegisterForm
-    success_url = reverse_lazy('ua')
+    success_url = reverse_lazy('index')
     template_name = 'users/resetPassword.html'

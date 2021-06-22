@@ -6,7 +6,7 @@ User = get_user_model()
 class RegisterForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("first_name", "username", "email")
+        fields = ('first_name', 'username', 'email')
 
 
 # from django import forms

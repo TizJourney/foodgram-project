@@ -1,0 +1,23 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}Войти на сайт{% endblock %}
+{% block css %} {% static 'pages/form.css' %}{% endblock %}
+
+{% block content %}
+<main class="main container">
+    <div class="main__header">
+        <h1 class="main__title">Регистрация</h1>
+    </div>
+    <div class="form-container">
+        <form class="form">
+            <form class="form">
+                {% csrf_token %}
+                {% include 'base/form.html' %}
+                <div class="form__footer">
+                    <button class="button button_style_blue">Создать аккаунт</button>
+                </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
+
