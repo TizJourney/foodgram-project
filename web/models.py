@@ -92,26 +92,27 @@ class Recipe(models.Model):
         return title
 
 
-class Subscribe(models.Model):
+class Follow(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='subscriber',
+        related_name='follower',
         verbose_name='Подписчик',
         help_text='Пользователь, который подписывается.',
     )
-    recipe = models.ForeignKey(
-        Recipe,
+    author = models.ForeignKey(
+        User,
         on_delete=models.CASCADE,
-        related_name='recipe',
-        verbose_name='Рецепт',
-        help_text='Рецепт, на которого подписываются.',
+        related_name='following',
+        verbose_name='Автор',
+        help_text='Пользователь, на которого подписываются.',
     )
 
     class Meta:
-        unique_together = ('user', 'recipe')
+        unique_together = ('user', 'author')
 
     def __str__(self):
         user = self.user
-        recipe = self.recipe
-        return f'Подписка @{user} на @{recipe}'
+        author = self.author
+        return f'Подписка @{user} на @{author}'
+
