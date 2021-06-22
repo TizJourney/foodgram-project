@@ -1,13 +1,16 @@
 from django.conf.urls import handler404, handler500  # noqa
 from django.urls import path
 
+from rest_framework.routers import DefaultRouter
+
 from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('new_recipe/', views.new_recipe, name='new_recipe'),
     # path('follow/', views.follow_index, name='follow_index'),
 #     path('group/<slug:slug>/', views.group_posts, name='group'),
-#     path('new/', views.new_post, name='new_post'),
+
 #     path('<str:username>/', views.profile, name='profile'),
 #     path('<str:username>/<int:post_id>/', views.post_view, name='post'),
 #     path(

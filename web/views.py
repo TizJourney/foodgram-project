@@ -6,3 +6,9 @@ def index(request):
         request,
         'recipes/recipes.html',
     )
+
+def new_recipe(request):
+    return render(
+        request,
+        'recipes/new.html',
+    )    
