@@ -51,6 +51,9 @@ class Recipe(models.Model):
         max_length=TAGS_MAX_LENGTH,
         choices=Tags.choices,
         default=Tags.BREAKFEAST,
+        #todo: remove
+        blank=True,
+        null=True,
     )
 
     ingredients = models.ManyToManyField(Ingredient, blank=True)
@@ -80,7 +83,10 @@ class Recipe(models.Model):
     image = models.ImageField(
         'Загрузить фото',
         upload_to='recipes_images/',
-        help_text='Загрузка изображения. Опционально.'
+        help_text='Загрузка изображения. Опционально.',
+        #todo: remove
+        blank=True,
+        null=True,
     )
 
     class Meta:

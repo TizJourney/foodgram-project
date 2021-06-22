@@ -13,7 +13,7 @@ class RecipeForm(forms.ModelForm):
             'ingredients',
             'time',
             'description',
-            'image'
+            'image',
             )
         widgets = {
             'text': forms.Textarea(),
