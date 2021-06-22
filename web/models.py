@@ -27,9 +27,9 @@ class Ingredient(models.Model):
 
 class Recipe(models.Model):
     class Tags(models.TextChoices):
-        BREAKFEAST = 'завтрак'
-        DINNER = 'обед'
-        SUPPER = 'ужин'
+        BREAKFEAST = ('breakfest', 'завтрак')
+        LUNCH = ('lunch', 'обед')
+        DINNER = ('dinner', 'ужин')
 
     TAGS_MAX_LENGTH = min(20, max((len(c[0]) for c in Tags.choices)))
 
@@ -70,7 +70,7 @@ class Recipe(models.Model):
         help_text='Описание рецепта. Необязательно для заполнения',
     )
 
-    cook_time = models.IntegerField(
+    time = models.IntegerField(
         'Время приготовления',
         validators=(
             MinValueValidator(0),
@@ -78,8 +78,8 @@ class Recipe(models.Model):
     )
 
     image = models.ImageField(
+        'Загрузить фото',
         upload_to='recipes_images/',
-        verbose_name='Изображение',
         help_text='Загрузка изображения. Опционально.'
     )
 

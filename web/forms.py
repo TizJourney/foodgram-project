@@ -11,10 +11,11 @@ class RecipeForm(forms.ModelForm):
             'name', 
             'tags', 
             'ingredients',
-            'cook_time',
+            'time',
             'description',
             'image'
             )
         widgets = {
-            'text': forms.Textarea()
+            'text': forms.Textarea(),
+            'image': forms.FileInput(),
         }
