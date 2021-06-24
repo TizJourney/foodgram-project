@@ -3,7 +3,7 @@
         <a href="{% url 'recipe' recipe_id=card.pk %}" class="link" target="_blank"><img src="{{card.image.url}}" alt="{{card.name}}" class="card__image"></a>    
     {% endif %}
     <div class="card__body">
-        <a class="card__title link" href="{% url 'recipe' recipe_id=card.pk %} target="_blank">{{ card.name }}</a>
+        <a class="card__title link" href="{% url 'recipe' recipe_id=card.pk %}" target="_blank">{{ card.name }}</a>
         <ul class="card__items">
             {% if card.breakfast_tag %}
             <li class="card__item"><span class="badge badge_style_orange">Завтрак</span></li>            
