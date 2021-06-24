@@ -17,9 +17,15 @@
                 </div>
             </div>
             <ul class="single-card__items">
-                <li class="single-card__item"><span class="badge badge_style_green">Обед</span></li>
+                {% if recipe.breakfast_tag %}
                 <li class="single-card__item"><span class="badge badge_style_orange">Завтрак</span></li>
+                {% endif %}
+                {% if recipe.lunch_tag %}
+                <li class="single-card__item"><span class="badge badge_style_green">Обед</span></li>
+                {% endif %}
+                {% if recipe.dinner_tag %}
                 <li class="single-card__item"><span class="badge badge_style_purple">Ужин</span></li>
+                {% endif %}
             </ul>
             <div class="single-card__items single-card__items_column">
                 <p class="single-card__text"><span class="icon-time"></span>{{recipe.time}} мин.</p>
