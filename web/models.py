@@ -87,6 +87,8 @@ class Recipe(models.Model):
         return title
 
 
+
+
 class Follow(models.Model):
     user = models.ForeignKey(
         User,
@@ -111,3 +113,27 @@ class Follow(models.Model):
         author = self.author
         return f'Подписка @{user} на @{author}'
 
+
+class Favorite(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='favorite_recipes',
+        verbose_name='Любимые рецепты',
+        help_text='Любимые рецепты пользователя',
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='favorite_by_users',
+        verbose_name='Пользователи рецепта',
+        help_text='Пользователи, подписанные на рецепт',
+    )
+
+    class Meta:
+        unique_together = ('user', 'recipe')
+
+    def __str__(self):
+        user = self.user
+        recipe = self.recipe
+        return f'Запомнить для @{user} рецепт @{recipe}'
