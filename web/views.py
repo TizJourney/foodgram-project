@@ -33,6 +33,16 @@ def index(request):
         context
     )
 
+def recipe_view(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+
+    context = {
+        'recipe': recipe,
+    }
+    return render(request, 'recipes/singlePage.html', context)
+
+
+
 
 @login_required
 def new_recipe(request):

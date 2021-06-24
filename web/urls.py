@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('new_recipe/', views.new_recipe, name='new_recipe'),
+    path('recipe/<int:recipe_id>/', views.recipe_view, name='recipe'),
     # path('follow/', views.follow_index, name='follow_index'),
 #     path('group/<slug:slug>/', views.group_posts, name='group'),
 
