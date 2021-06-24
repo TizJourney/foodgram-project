@@ -35,13 +35,13 @@ def index(request):
 
 def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
+    isFavoried = request.user and recipe.favorite_by_users.filter(user=request.user).exists()
 
     context = {
         'recipe': recipe,
+        'isFavoried': isFavoried,
     }
     return render(request, 'recipes/singlePage.html', context)
-
-
 
 
 @login_required
