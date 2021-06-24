@@ -1,0 +1,24 @@
+<div class="card" data-id="120">
+        {% load thumbnail %}
+        {% thumbnail card.image "960x339" crop="center" upscale=True as im %}
+        <a href="#" class="link" target="_blank"><img src="{{ im.url }}" alt="Какой-то текст"
+                class="card__image"></a>
+        {% endthumbnail %}
+            <div class="card__body">
+            <a class="card__title link" href="#" target="_blank">Французские тосты</a>
+            <ul class="card__items">
+                <li class="card__item"><span class="badge badge_style_green">Обед</span></li>
+                <li class="card__item"><span class="badge badge_style_orange">Завтрак</span></li>
+                <li class="card__item"><span class="badge badge_style_purple">Ужин</span></li>
+            </ul>
+            <div class="card__items card__items_column">
+                <p class="card__text"><span class="icon-time"></span> 20 мин.</p>
+                <p class="card__text"><span class="icon-user"></span> <a href="#" style="color: black">Вероника
+                        Чернова</a></p>
+            </div>
+        </div>
+        <div class="card__footer">
+            <button class="button button_style_light-blue" name="purchases" data-out><span
+                    class="icon-plus button__icon"></span>Добавить в покупки</button>
+        </div>
+    </div>    
