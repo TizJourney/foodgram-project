@@ -33,7 +33,7 @@ class FavoritesView(View):
     def post(self, request):
         json_data = json.loads(request.body)
         recipe = get_object_or_404(Recipe, pk=json_data.get('id'))
-        obj, created = Favorite.objects.get_or_create(user=request.user, recipe=recipe)
+        obj = Favorite.objects.get_or_create(user=request.user, recipe=recipe)
         return JsonResponse(FavoriteSerializer(obj).data, status=status.HTTP_200_OK)
 
 @login_required
