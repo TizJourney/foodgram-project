@@ -2,15 +2,35 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
+from django.core.paginator import Paginator
+
 from django.shortcuts import get_object_or_404, redirect, render
+
+from .models import Recipe
 
 from .forms import RecipeForm
 
+RECIPE_PER_PAGE = 10
+
+def _prepare_recipe_content(post_query, page_number):
+    paginator = Paginator(post_query, RECIPE_PER_PAGE)
+    page = paginator.get_page(page_number)
+    return {'page': page, 'paginator': paginator}
+
 
 def index(request):
+    page_number = request.GET.get('page')
+    recipe_query = (
+        Recipe.objects
+        .all()
+    )
+
+    context = _prepare_recipe_content(recipe_query, page_number)    
+
     return render(
         request,
         'recipes/recipes.html',
+        context
     )
 
 
