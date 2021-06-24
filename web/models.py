@@ -89,24 +89,24 @@ class Recipe(models.Model):
 
 
 
-class Follow(models.Model):
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='follower',
-        verbose_name='Подписчик',
-        help_text='Пользователь, который подписывается.',
-    )
+class Subscriber(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='following',
+        related_name='subscribing',
         verbose_name='Автор',
         help_text='Пользователь, на которого подписываются.',
     )
+    subscriber = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='subscribers',
+        verbose_name='Подписчик',
+        help_text='Пользователь, который подписывается.',
+    )
 
     class Meta:
-        unique_together = ('user', 'author')
+        unique_together = ('author', 'subscriber')
 
     def __str__(self):
         user = self.user

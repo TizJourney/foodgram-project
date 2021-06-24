@@ -30,6 +30,12 @@ class Api {
   removeFavorites(id) {
     return this._request(`favorites/${id}/`, 'DELETE', {id});
   }
+  addSubscriptions(id) {
+    return this._request('subscriptions/', 'POST', {id});
+  }
+  removeSubscriptions(id) {
+    return this._request(`subscriptions/${id}/`, 'DELETE', {id});
+  }
 
   getPurchases() {
     return fetch(`${this.apiUrl}/purchases/`, {
@@ -76,37 +82,7 @@ class Api {
         return Promise.reject(e.statusText)
       })
   }
-  addSubscriptions(id) {
-    return fetch(`${this.apiUrl}/subscriptions/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id: id
-      })
-    })
-      .then(e => {
-        if (e.ok) {
-          return e.json()
-        }
-        return Promise.reject(e.statusText)
-      })
-  }
-  removeSubscriptions(id) {
-    return fetch(`${this.apiUrl}/subscriptions/${id}/`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(e => {
-        if (e.ok) {
-          return e.json()
-        }
-        return Promise.reject(e.statusText)
-      })
-  }
+
   getIngredients(text) {
     return fetch(`${this.apiUrl}/ingredients/?query=${text}`, {
       headers: {
