@@ -70,7 +70,7 @@ class Recipe(models.Model):
 
     image = models.ImageField(
         'Загрузить фото',
-        upload_to='recipes_images/',
+        upload_to='media/',
         help_text='Загрузка изображения. Опционально.',
         #todo: remove
         blank=True,

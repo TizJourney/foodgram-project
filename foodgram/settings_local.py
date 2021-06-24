@@ -18,6 +18,9 @@ DATABASES = {
     }
 }
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'recipes_images/')
+MEDIA_URL = '/media/'
+
 INTERNAL_IPS = [
 '127.0.0.1',
 ]
