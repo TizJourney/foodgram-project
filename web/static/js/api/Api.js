@@ -1,11 +1,41 @@
 class Api {
   constructor(apiUrl) {
     this.apiUrl = apiUrl;
+    this.token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
   }
+  
+  _request(urlTail, method='GET', data=null) {
+    const requestParams  = {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': this.token
+      }
+    }
+    if (data) {
+      requestParams ['body'] = JSON.stringify(data);
+    }
+    return fetch(this.apiUrl + urlTail, requestParams )
+      .then(e => {
+        if (e.ok) {
+          return e.json()
+        }
+        return Promise.reject(e.statusText)
+      })
+  }
+
+  addFavorites(id) {
+    return this._request('favorites/', 'POST', {id});
+  }
+  removeFavorites(id) {
+    return this._request(`favorites/${id}/`, 'DELETE', {id});
+  }
+
   getPurchases() {
     return fetch(`${this.apiUrl}/purchases/`, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': this.token
       }
     })
       .then(e => {
@@ -65,37 +95,6 @@ class Api {
   }
   removeSubscriptions(id) {
     return fetch(`${this.apiUrl}/subscriptions/${id}/`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(e => {
-        if (e.ok) {
-          return e.json()
-        }
-        return Promise.reject(e.statusText)
-      })
-  }
-  addFavorites(id) {
-    return fetch(`${this.apiUrl}/favorites/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id: id
-      })
-    })
-      .then(e => {
-        if (e.ok) {
-          return e.json()
-        }
-        return Promise.reject(e.statusText)
-      })
-  }
-  removeFavorites(id) {
-    return fetch(`${this.apiUrl}/favorites/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
