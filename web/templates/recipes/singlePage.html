@@ -1,12 +1,12 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% block title %}{{recipe.name}}{% endblock %}
-{% block css %} {% static 'pages/index.css' %}{% endblock %}
+{% block css %} {% static 'pages/single.css' %}{% endblock %}
 
 {% block content %}
 <main class="main container">
     <div class="single-card" data-id="{{recipe.pk}}" data-author="recipe.author.pk">
-        <img src="./images/testCardImg.png" alt="{{recipe.name}}" class="single-card__image">
+        <img src="{{recipe.image.url}}" alt="{{recipe.name}}" class="single-card__image">
         <div class="single-card__info">
             <div class="single-card__header-info">
                 <h1 class="single-card__title">{{recipe.name}}</h1>
@@ -22,10 +22,10 @@
                 <li class="single-card__item"><span class="badge badge_style_purple">Ужин</span></li>
             </ul>
             <div class="single-card__items single-card__items_column">
-                <p class="single-card__text"><span class="icon-time"></span> 20 мин.</p>
+                <p class="single-card__text"><span class="icon-time"></span>{{recipe.time}} мин.</p>
                 <ul class="single-card__items">
                     <li class="single-card__item">
-                        <p class="single-card__text"><span class="icon-user"></span> Вероника Чернова</p>
+                        <p class="single-card__text"><span class="icon-user"></span>{{recipe.author}}</p>
                     </li>
                     <li class="single-card__item"> <a style="margin-left: 2.5em" href="#"
                             class="single-card__text">Редактировать рецепт</a></li>
@@ -50,9 +50,7 @@
             </div>
             <div class="single-card__section">
                 <h3 class="single-card__section-title">Описание:</h3>
-                <p class=" single-card__section-text">Смешать молоко с сахаром, добавить яйца, тщательно все взбить.
-                    Обмакнуть тосты в смесь и жарить на сливочном масле до золотистой корочки.</p>
-                <p class=" single-card__section-text">Полить сверху сиропом топинамбура и украсить ягодами.</p>
+                <p class=" single-card__section-text">{{recipe.description}}</p>
             </div>
         </div>
     </div>
@@ -63,12 +61,13 @@
 <script src="{% static 'js/components/Purchases.js' %}"></script>
 <script src="{% static 'js/components/Favorites.js' %}"></script>
 <script src="{% static 'js/components/Subscribe.js' %}"></script>
-<script src="{% static 'js/components/config.js' %}"></script>
+
+<script src="{% static 'js/config/config.js' %}"></script>
 
 <script src="{% static 'js/components/MainCards.js' %}"></script>
 <script src="{% static 'js/components/SingleCard.js' %}"></script>
 <script src="{% static 'js/components/Header.js' %}"></script>
 
-<script src="{% static 'js/components/Api.js' %}"></script>
+<script src="{% static 'js/api/Api.js' %}"></script>
 <script src="{% static 'singlePage.js' %}"></script>
 {% endblock %}
