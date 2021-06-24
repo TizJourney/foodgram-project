@@ -34,6 +34,10 @@ class FavoritesView(View):
         json_data = json.loads(request.body)
         recipe = get_object_or_404(Recipe, pk=json_data.get('id'))
         obj, created = Favorite.objects.get_or_create(user=request.user, recipe=recipe)
-        return JsonResponse(FavoriteSerializer(obj), status=status.HTTP_200_OK)
+        return JsonResponse(FavoriteSerializer(obj).data, status=status.HTTP_200_OK)
 
-
+@login_required
+def favorite_delete(request, recipe_id):
+    obj = get_object_or_404(Favorite, user=request.user, recipe__pk=recipe_id)
+    obj.delete()
+    return JsonResponse(FavoriteSerializer(obj).data, status=status.HTTP_200_OK)
