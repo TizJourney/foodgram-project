@@ -1,23 +1,22 @@
-
 class Api {
-    constructor(apiUrl) {
-        this.apiUrl =  apiUrl;
-    }
-  getPurchases () {
-    return fetch(`/purchases`, {
+  constructor(apiUrl) {
+    this.apiUrl = apiUrl;
+  }
+  getPurchases() {
+    return fetch(`${this.apiUrl}/purchases/`, {
       headers: {
         'Content-Type': 'application/json'
       }
     })
-      .then( e => {
-          if(e.ok) {
-              return e.json()
-          }
-          return Promise.reject(e.statusText)
+      .then(e => {
+        if (e.ok) {
+          return e.json()
+        }
+        return Promise.reject(e.statusText)
       })
   }
-  addPurchases (id) {
-    return fetch(`/purchases`, {
+  addPurchases(id) {
+    return fetch(`${this.apiUrl}/purchases/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -26,29 +25,29 @@ class Api {
         id: id
       })
     })
-      .then( e => {
-          if(e.ok) {
-              return e.json()
-          }
-          return Promise.reject(e.statusText)
+      .then(e => {
+        if (e.ok) {
+          return e.json()
+        }
+        return Promise.reject(e.statusText)
       })
   }
-  removePurchases (id){
-    return fetch(`/purchases/${id}`, {
+  removePurchases(id) {
+    return fetch(`${this.apiUrl}/purchases/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       }
     })
-      .then( e => {
-          if(e.ok) {
-              return e.json()
-          }
-          return Promise.reject(e.statusText)
+      .then(e => {
+        if (e.ok) {
+          return e.json()
+        }
+        return Promise.reject(e.statusText)
       })
   }
   addSubscriptions(id) {
-    return fetch(`/subscriptions`, {
+    return fetch(`${this.apiUrl}/subscriptions/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -57,29 +56,29 @@ class Api {
         id: id
       })
     })
-      .then( e => {
-          if(e.ok) {
-              return e.json()
-          }
-          return Promise.reject(e.statusText)
+      .then(e => {
+        if (e.ok) {
+          return e.json()
+        }
+        return Promise.reject(e.statusText)
       })
   }
-  removeSubscriptions (id) {
-    return fetch(`/subscriptions/${id}`, {
+  removeSubscriptions(id) {
+    return fetch(`${this.apiUrl}/subscriptions/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       }
     })
-      .then( e => {
-          if(e.ok) {
-              return e.json()
-          }
-          return Promise.reject(e.statusText)
+      .then(e => {
+        if (e.ok) {
+          return e.json()
+        }
+        return Promise.reject(e.statusText)
       })
   }
-  addFavorites (id)  {
-    return fetch(`/favorites`, {
+  addFavorites(id) {
+    return fetch(`${this.apiUrl}/favorites/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -88,38 +87,38 @@ class Api {
         id: id
       })
     })
-        .then( e => {
-            if(e.ok) {
-                return e.json()
-            }
-            return Promise.reject(e.statusText)
-        })
+      .then(e => {
+        if (e.ok) {
+          return e.json()
+        }
+        return Promise.reject(e.statusText)
+      })
   }
-  removeFavorites (id) {
-    return fetch(`/favorites/${id}`, {
+  removeFavorites(id) {
+    return fetch(`${this.apiUrl}/favorites/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       }
     })
-        .then( e => {
-            if(e.ok) {
-                return e.json()
-            }
-            return Promise.reject(e.statusText)
-        })
+      .then(e => {
+        if (e.ok) {
+          return e.json()
+        }
+        return Promise.reject(e.statusText)
+      })
   }
-    getIngredients  (text)  {
-        return fetch(`/ingredients?query=${text}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then( e => {
-                if(e.ok) {
-                    return e.json()
-                }
-                return Promise.reject(e.statusText)
-            })
-    }
+  getIngredients(text) {
+    return fetch(`${this.apiUrl}/ingredients/?query=${text}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(e => {
+        if (e.ok) {
+          return e.json()
+        }
+        return Promise.reject(e.statusText)
+      })
+  }
 }
