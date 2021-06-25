@@ -27,6 +27,8 @@ class IngredientAdmin(admin.ModelAdmin):
         'title',
         'dimension',
     )
+    search_fields = ('title',)
+    list_filter = ('dimension',)
 
 
 admin.site.register(Recipe, RecipeAdmin)
