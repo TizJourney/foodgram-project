@@ -26,12 +26,31 @@ def index(request):
     )
 
     context = _prepare_recipe_content(recipe_query, page_number)    
+    context['title'] = 'Рецепты'
 
     return render(
         request,
         'recipes/recipes.html',
         context
     )
+
+@login_required
+def favorite(request):
+    page_number = request.GET.get('page')
+
+    recipe_query = (
+        Recipe.objects.filter(favorite_by_users__user=request.user)
+    )
+
+    context = _prepare_recipe_content(recipe_query, page_number)    
+    context['title'] = 'Избранное'
+
+    return render(
+        request,
+        'recipes/recipes.html',
+        context
+    )
+
 
 def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
