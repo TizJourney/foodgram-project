@@ -19,7 +19,7 @@ def _prepare_recipe_content(post_query, page_number, request):
 
     user = request.user if request.user.is_authenticated else None
 
-    filter_query = Q()
+    filter_query = Q(pk__in=[])
     filter_context = {
         'breakfast': request.GET.get('breakfast', '1'),
         'lunch': request.GET.get('lunch', '1'),
