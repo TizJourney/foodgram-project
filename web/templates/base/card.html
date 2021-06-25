@@ -17,7 +17,7 @@
         </ul>
         <div class="card__items card__items_column">
             <p class="card__text"><span class="icon-time"></span> {{card.time }} мин.</p>
-            <p class="card__text"><span class="icon-user"></span> <a href="#" style="color: black">{{card.author}}</a>
+            <p class="card__text"><span class="icon-user"></span> <a href="{% url 'recipes_by_author' author_id=card.author.pk %}" style="color: black">{{card.author}}</a>
             </p>
         </div>
     </div>
