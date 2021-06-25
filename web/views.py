@@ -37,13 +37,12 @@ def index(request):
     recipe_query = (
         Recipe.objects
         .all()
-        .annotate(isFavoried=Count('favorite_by_users', filter=favoriedQuery))
     )
 
     context = _prepare_recipe_content(
         recipe_query,
         page_number,
-        request.user or None
+        request.user if request.user.is_authenticated else None
         )
     context['title'] = 'Рецепты'
 
@@ -71,7 +70,7 @@ def favorite(request):
         page_number,
         request.user or None
         )
-        
+
     context['title'] = 'Избранное'
 
     return render(
