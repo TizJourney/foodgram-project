@@ -148,7 +148,7 @@ def new_recipe(request):
         return render(
             request,
             'recipes/new.html',
-            {'form': form}
+            {'form': form }
         )
 
     form = RecipeForm()

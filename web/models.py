@@ -23,6 +23,24 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.title
 
+class IngredientQuanity(models.Model):
+    title = models.CharField(max_length=200)
+    dimension = models.CharField(
+        'Единица измерения',
+        max_length=200,
+        help_text='Единица измерения ингридента. Обязательно к заполнению.'
+    )
+    quanity = models.IntegerField(
+        'Количество единиц в рецепте',
+    )
+
+    class Meta:
+        verbose_name = 'Количество ингридиента'
+        verbose_name_plural = 'Количества ингридиентов'
+
+    def __str__(self):
+        return self.title        
+
 
 class Recipe(models.Model):
     name = models.TextField(
@@ -43,7 +61,7 @@ class Recipe(models.Model):
     lunch_tag = models.BooleanField('Обед', db_index=True)
     dinner_tag = models.BooleanField('Ужин', db_index=True)
 
-    ingredients = models.ManyToManyField(Ingredient, blank=True)
+    ingredients = models.ManyToManyField(IngredientQuanity, blank=True)
 
     pub_date = models.DateTimeField(
         'Дата создания',
