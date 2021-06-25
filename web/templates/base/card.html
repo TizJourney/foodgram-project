@@ -25,7 +25,7 @@
         <button class="button button_style_light-blue" name="purchases" data-out><span
                 class="icon-plus button__icon"></span>Добавить в покупки</button>
         {% if user.is_authenticated %}
-            {% if user in card.favoried_by_users %}
+            {% if card.isFavoried %}
             <button class="button button_style_none" name="favorites"><span
                 class="icon-favorite icon-favorite_active"></span></button>
             {% else %}

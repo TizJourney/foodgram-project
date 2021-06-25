@@ -6,26 +6,45 @@ from django.core.paginator import Paginator
 
 from django.shortcuts import get_object_or_404, redirect, render
 
+from django.db.models import Q, Count
+
 from .models import Recipe, Subscriber
 
 from .forms import RecipeForm
 
 RECIPE_PER_PAGE = 10
 
-def _prepare_recipe_content(post_query, page_number):
-    paginator = Paginator(post_query, RECIPE_PER_PAGE)
+def _prepare_recipe_content(post_query, page_number, user=None):
+    if user is not None:
+        favoriedQuery = Q(favorite_by_users__user=user)
+        extended_query = (
+            post_query
+            .annotate(isFavoried=Count('favorite_by_users', filter=favoriedQuery))
+        )
+    else:
+        extended_query = post_query
+
+    paginator = Paginator(extended_query, RECIPE_PER_PAGE)
     page = paginator.get_page(page_number)
     return {'page': page, 'paginator': paginator}
 
 
 def index(request):
     page_number = request.GET.get('page')
+
+    favoriedQuery = Q(favorite_by_users__user=request.user)
+
     recipe_query = (
         Recipe.objects
         .all()
+        .annotate(isFavoried=Count('favorite_by_users', filter=favoriedQuery))
     )
 
-    context = _prepare_recipe_content(recipe_query, page_number)    
+    context = _prepare_recipe_content(
+        recipe_query,
+        page_number,
+        request.user or None
+        )
     context['title'] = 'Рецепты'
 
     return render(
@@ -38,11 +57,21 @@ def index(request):
 def favorite(request):
     page_number = request.GET.get('page')
 
+    
+
     recipe_query = (
-        Recipe.objects.filter(favorite_by_users__user=request.user)
+        Recipe
+        .objects
+        .filter(favorite_by_users__user=request.user)
+        
     )
 
-    context = _prepare_recipe_content(recipe_query, page_number)    
+    context = _prepare_recipe_content(
+        recipe_query,
+        page_number,
+        request.user or None
+        )
+        
     context['title'] = 'Избранное'
 
     return render(
