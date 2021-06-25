@@ -89,7 +89,7 @@ def recipes_by_author(request, author_id):
         recipe_query,
         request
     )
-    context['title'] = 'Рецепты'
+    context['title'] = f'Рецепты автора {author}'
 
     return render(
         request,
