@@ -25,13 +25,13 @@ def _prepare_recipe_content(post_query, page_number, request):
         'lunch': request.GET.get('lunch', '1'),
         'dinner': request.GET.get('dinner', '1'),
     }
-    if filter_context['breakfast'] is not '0':
+    if filter_context['breakfast'] != '0':
         filter_query.add(Q(breakfast_tag=True), Q.OR)
 
-    if filter_context['lunch'] is not '0':
+    if filter_context['lunch'] != '0':
         filter_query.add(Q(lunch_tag=True), Q.OR)
 
-    if filter_context['dinner'] is not '0':
+    if filter_context['dinner'] != '0':
         filter_query.add(Q(dinner_tag=True), Q.OR)
 
     extended_query = post_query.filter(filter_query)
