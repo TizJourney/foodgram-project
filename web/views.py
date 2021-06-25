@@ -14,25 +14,46 @@ from .forms import RecipeForm
 
 RECIPE_PER_PAGE = 10
 
-def _prepare_recipe_content(post_query, page_number, user=None):
+
+def _prepare_recipe_content(post_query, page_number, request):
+
+    user = request.user if request.user.is_authenticated else None
+
+    filter_query = Q()
+    filter_context = {
+        'breakfast': request.GET.get('breakfast', '1'),
+        'lunch': request.GET.get('lunch', '1'),
+        'dinner': request.GET.get('dinner', '1'),
+    }
+    if filter_context['breakfast'] is not '0':
+        filter_query.add(Q(breakfast_tag=True), Q.OR)
+
+    if filter_context['lunch'] is not '0':
+        filter_query.add(Q(lunch_tag=True), Q.OR)
+
+    if filter_context['dinner'] is not '0':
+        filter_query.add(Q(dinner_tag=True), Q.OR)
+
+    extended_query = post_query.filter(filter_query)
+
     if user is not None:
         favoriedQuery = Q(favorite_by_users__user=user)
         extended_query = (
-            post_query
+            extended_query
             .annotate(isFavoried=Count('favorite_by_users', filter=favoriedQuery))
         )
-    else:
-        extended_query = post_query
 
     paginator = Paginator(extended_query, RECIPE_PER_PAGE)
     page = paginator.get_page(page_number)
-    return {'page': page, 'paginator': paginator}
+    return {
+        'page': page,
+        'paginator': paginator,
+        'filter': filter_context
+    }
 
 
 def index(request):
     page_number = request.GET.get('page')
-
-    favoriedQuery = Q(favorite_by_users__user=request.user)
 
     recipe_query = (
         Recipe.objects
@@ -42,8 +63,8 @@ def index(request):
     context = _prepare_recipe_content(
         recipe_query,
         page_number,
-        request.user if request.user.is_authenticated else None
-        )
+        request
+    )
     context['title'] = 'Рецепты'
 
     return render(
@@ -52,24 +73,23 @@ def index(request):
         context
     )
 
+
 @login_required
 def favorite(request):
     page_number = request.GET.get('page')
-
-    
 
     recipe_query = (
         Recipe
         .objects
         .filter(favorite_by_users__user=request.user)
-        
+
     )
 
     context = _prepare_recipe_content(
         recipe_query,
         page_number,
-        request.user or None
-        )
+        request
+    )
 
     context['title'] = 'Избранное'
 
@@ -82,8 +102,10 @@ def favorite(request):
 
 def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    isFavoried = request.user and recipe.favorite_by_users.filter(user=request.user).exists()
-    isSubscribed = request.user and recipe.author.subscribed_by_user.filter(subscriber=request.user).exists()
+    isFavoried = request.user and recipe.favorite_by_users.filter(
+        user=request.user).exists()
+    isSubscribed = request.user and recipe.author.subscribed_by_user.filter(
+        subscriber=request.user).exists()
 
     context = {
         'recipe': recipe,
