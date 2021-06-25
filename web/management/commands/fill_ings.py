@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand, CommandError
-from web.models import Recipe
+from web.models import Ingredient
 
 import json
+
 
 class Command(BaseCommand):
     help = 'Скрипт загрузки ингридентов из json файла'
@@ -10,8 +11,12 @@ class Command(BaseCommand):
         parser.add_argument('data', type=str)
 
     def handle(self, *args, **options):
+        Ingredient.objects.all().delete()
         with open(options['data'], 'rt') as ings_file:
             data = json.load(ings_file)
-            for item in data:
-                print(item)
-        print(Recipe.objects.all())
+            items = [
+                Ingredient(title=item['title'],dimension=item['dimension']) 
+                for item in data
+                ]
+            Ingredient.objects.bulk_create(items)
+        print(Ingredient.objects.all())
