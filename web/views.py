@@ -8,12 +8,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from django.db.models import Q, Count
 
-from .models import Recipe, Subscriber
-
+from .models import Recipe
 from .forms import RecipeForm
 
-RECIPE_PER_PAGE = 10
-
+RECIPE_PER_PAGE = 6
+FOLLOW_PER_PAGE = 6
 
 def _prepare_recipe_content(post_query, page_number, request):
 
@@ -137,17 +136,16 @@ def new_recipe(request):
 def follow_view(request):
     page_number = request.GET.get('page')
 
-    recipe_query = (
-        Recipe.objects
-        .all()
+    follow_query = (
+        request.user.subscribed_to_user.filter(subscriber=request.user).prefetch_related('author__recipes')
     )
 
-    context = _prepare_recipe_content(
-        recipe_query,
-        page_number,
-        request
-    )
-    context['title'] = 'Рецепты'
+    paginator = Paginator(follow_query, FOLLOW_PER_PAGE)
+    page = paginator.get_page(page_number)
+    context = {
+        'page': page,
+        'paginator': paginator,
+    }
 
     return render(
         request,
