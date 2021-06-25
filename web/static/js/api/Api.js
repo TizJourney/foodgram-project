@@ -36,6 +36,10 @@ class Api {
   removeSubscriptions(id) {
     return this._request(`subscriptions/${id}/`, 'DELETE', {id});
   }
+  getIngredients(text) {
+    return this._request(`ingredients/?query=${text}`, 'GET', {id});
+  }
+
 
   getPurchases() {
     return fetch(`${this.apiUrl}/purchases/`, {
@@ -71,20 +75,6 @@ class Api {
   removePurchases(id) {
     return fetch(`${this.apiUrl}/purchases/${id}/`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(e => {
-        if (e.ok) {
-          return e.json()
-        }
-        return Promise.reject(e.statusText)
-      })
-  }
-
-  getIngredients(text) {
-    return fetch(`${this.apiUrl}/ingredients/?query=${text}`, {
       headers: {
         'Content-Type': 'application/json'
       }

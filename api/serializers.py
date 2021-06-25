@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from web.models import Favorite, Subscriber
+from web.models import Favorite, Subscriber, Ingredient
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
@@ -19,3 +19,9 @@ class SubscriberSerializer(serializers.ModelSerializer):
             'subscriber',
         )
         model = Subscriber
+
+
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = Ingredient
