@@ -7,11 +7,11 @@
             <ul class="card-user__items">
                 {% for recipe in follow.author.recipes.all|slice:":3" %}
                     <li class="card-user__item">
-                        <div class="recipe">
+                        <a class="recipe link" href="{% url 'recipe' recipe_id=recipe.pk %}" target="_blank">
                             <img src="{{recipe.image.url}}" alt="{{ recipe.name }}" class="recipe__image">
                             <h3 class="recipe__title">{{ recipe.name }}</h3>
                             <p class="recipe__text"><span class="icon-time"></span> {{ recipe.time }} мин.</p>
-                        </div>
+                        </a>
                     </li>
                 {% endfor %}
                 {% if follow.author.recipes.count > 3 %}
