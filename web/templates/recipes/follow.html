@@ -1,0 +1,142 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+{% block css %} {% static 'pages/myFollow.css' %}{% endblock %}
+
+{% block content %}
+<main class="main container">
+    <div class="main__header">
+        <h1 class="main__title">Мои подписки</h1>
+    </div>
+    <div class="card-list">
+        <div class="card-user" data-author="700">
+            <div class="card-user__header">
+                <h2 class="card-user__title">Вероника Чернова</h2>
+            </div>
+            <div class="card-user__body">
+                <ul class="card-user__items">
+                    <li class="card-user__item">
+                        <div class="recipe">
+                            <img src="./images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
+                            <h3 class="recipe__title">Французские тосты</h3>
+                            <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                        </div>
+                    </li>
+                    <li class="card-user__item">
+                        <div class="recipe">
+                            <img src="./images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
+                            <h3 class="recipe__title">Французские тосты</h3>
+                            <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                        </div>
+                    </li>
+                    <li class="card-user__item">
+                        <div class="recipe">
+                            <img src="./images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
+                            <h3 class="recipe__title">Французские тосты</h3>
+                            <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                        </div>
+                    </li>
+                    <li class="card-user__item">
+                        <a href="#" class="card-user__link link">Еще 7 рецептов...</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-user__footer">
+                <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+            </div>
+        </div>
+        <div class="card-user" data-author="707">
+            <div class="card-user__header">
+                <h2 class="card-user__title">Вероника Чернова</h2>
+            </div>
+            <div class="card-user__body">
+                <ul class="card-user__items">
+                    <li class="card-user__item">
+                        <div class="recipe">
+                            <img src="./images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
+                            <h3 class="recipe__title">Французские тосты</h3>
+                            <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                        </div>
+                    </li>
+                    <li class="card-user__item">
+                        <div class="recipe">
+                            <img src="./images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
+                            <h3 class="recipe__title">Французские тосты</h3>
+                            <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                        </div>
+                    </li>
+                    <li class="card-user__item">
+                        <div class="recipe">
+                            <img src="./images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
+                            <h3 class="recipe__title">Французские тосты</h3>
+                            <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                        </div>
+                    </li>
+                    <li class="card-user__item">
+                        <a href="#" class="card-user__link link">Еще 7 рецептов...</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-user__footer">
+                <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+            </div>
+        </div>
+        <div class="card-user" data-author="7091">
+            <div class="card-user__header">
+                <h2 class="card-user__title">Вероника Чернова</h2>
+            </div>
+            <div class="card-user__body">
+                <ul class="card-user__items">
+                    <li class="card-user__item">
+                        <div class="recipe">
+                            <img src="./images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
+                            <h3 class="recipe__title">Французские тосты</h3>
+                            <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                        </div>
+                    </li>
+                    <li class="card-user__item">
+                        <div class="recipe">
+                            <img src="./images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
+                            <h3 class="recipe__title">Французские тосты</h3>
+                            <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                        </div>
+                    </li>
+                    <li class="card-user__item">
+                        <div class="recipe">
+                            <img src="./images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
+                            <h3 class="recipe__title">Французские тосты</h3>
+                            <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                        </div>
+                    </li>
+                    <li class="card-user__item">
+                        <a href="#" class="card-user__link link">Еще 7 рецептов...</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-user__footer">
+                <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+            </div>
+        </div>
+    </div>    
+    {% if page.has_other_pages %}
+        {% include "base/paginator.html" with items=page paginator=paginator %}
+    {% endif %}
+</main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+
+    <script src="{% static 'js/components/Purchases.js' %}"></script>
+    <script src="{% static 'js/components/Favorites.js' %}"></script>
+
+    <script src="{% static 'js/components/config.js' %}"></script>
+    <script src="{% static 'js/components/CardList.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+
+    <script src="{% static 'js/config/config.js' %}"></script>
+
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    <script src="{% static 'indexAuth.js' %}"></script>
+{% endblock %}
+

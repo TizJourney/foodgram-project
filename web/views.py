@@ -132,3 +132,25 @@ def new_recipe(request):
 
     form = RecipeForm()
     return render(request, 'recipes/new.html', {'form': form})
+
+@login_required
+def follow_view(request):
+    page_number = request.GET.get('page')
+
+    recipe_query = (
+        Recipe.objects
+        .all()
+    )
+
+    context = _prepare_recipe_content(
+        recipe_query,
+        page_number,
+        request
+    )
+    context['title'] = 'Рецепты'
+
+    return render(
+        request,
+        'recipes/follow.html',
+        context
+    )
