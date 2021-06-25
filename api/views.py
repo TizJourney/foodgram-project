@@ -20,8 +20,10 @@ from django.http import JsonResponse
 import json
 
 from .serializers import FavoriteSerializer, SubscriberSerializer, IngredientSerializer
+from django.views.generic.list import ListView
 from rest_framework.renderers import JSONRenderer
 from django.contrib.auth import get_user_model
+from rest_framework import filters, viewsets, generics
 
 User = get_user_model()
 
@@ -75,9 +77,13 @@ def subscriptions_delete(request, author_id):
     return JsonResponse(SubscriberSerializer(obj).data, status=status.HTTP_200_OK)
 
 
-def ingredients(request):
-    query = request.GET.get('query')
-    if not query:
-        return response.Response([], status=status.HTTP_200_OK)
-    objects = Ingredient.objects.filter(title__start_with=query)
-    return JsonResponse(IngredientSerializer(objects, many=True).data, status=status.HTTP_200_OK)
+class Ingredients(generics.ListAPIView):
+    serializer_class = IngredientSerializer
+    MAX_LIMIT = 10 
+    
+    def get_queryset(self):
+        query = self.request.GET.get('query').lower()
+        return (
+            Ingredient.objects
+            .filter(title__istartswith=query)[:self.MAX_LIMIT]
+        )

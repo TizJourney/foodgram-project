@@ -37,7 +37,7 @@ class Api {
     return this._request(`subscriptions/${id}/`, 'DELETE', {id});
   }
   getIngredients(text) {
-    return this._request(`ingredients/?query=${text}`, 'GET', {id});
+    return this._request(`ingredients/?query=${text}`, 'GET');
   }
 
 
