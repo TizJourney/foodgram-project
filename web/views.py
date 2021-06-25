@@ -11,10 +11,16 @@ from django.db.models import Q, Count
 from .models import Recipe
 from .forms import RecipeForm
 
+from django.contrib.auth import get_user_model
+
 RECIPE_PER_PAGE = 6
 FOLLOW_PER_PAGE = 6
 
-def _prepare_recipe_content(post_query, page_number, request):
+User = get_user_model()
+
+def _prepare_recipe_content(post_query, request):
+
+    page_number = request.GET.get('page')
 
     user = request.user if request.user.is_authenticated else None
 
@@ -61,7 +67,6 @@ def index(request):
 
     context = _prepare_recipe_content(
         recipe_query,
-        page_number,
         request
     )
     context['title'] = 'Рецепты'
@@ -72,11 +77,29 @@ def index(request):
         context
     )
 
+def recipes_by_author(request, author_id):
+    author = get_object_or_404(User, id=author_id)
+
+    recipe_query = (
+        Recipe.objects.filter(author=author)
+        .all()
+    )
+
+    context = _prepare_recipe_content(
+        recipe_query,
+        request
+    )
+    context['title'] = 'Рецепты'
+
+    return render(
+        request,
+        'recipes/recipes.html',
+        context
+    )    
+
 
 @login_required
 def favorite(request):
-    page_number = request.GET.get('page')
-
     recipe_query = (
         Recipe
         .objects
@@ -86,7 +109,6 @@ def favorite(request):
 
     context = _prepare_recipe_content(
         recipe_query,
-        page_number,
         request
     )
 
