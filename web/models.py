@@ -93,14 +93,14 @@ class Subscriber(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='subscribing',
+        related_name='subscribed_by_user',
         verbose_name='Автор',
         help_text='Пользователь, на которого подписываются.',
     )
     subscriber = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='subscribers',
+        related_name='subscribed_to_user',
         verbose_name='Подписчик',
         help_text='Пользователь, который подписывается.',
     )
@@ -109,9 +109,9 @@ class Subscriber(models.Model):
         unique_together = ('author', 'subscriber')
 
     def __str__(self):
-        user = self.user
+        subscriber = self.subscriber
         author = self.author
-        return f'Подписка @{user} на @{author}'
+        return f'Подписка @{subscriber} на @{author}'
 
 
 class Favorite(models.Model):

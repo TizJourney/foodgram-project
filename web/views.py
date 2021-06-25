@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Recipe
+from .models import Recipe, Subscriber
 
 from .forms import RecipeForm
 
@@ -36,10 +36,12 @@ def index(request):
 def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     isFavoried = request.user and recipe.favorite_by_users.filter(user=request.user).exists()
+    isSubscribed = request.user and recipe.author.subscribed_by_user.filter(subscriber=request.user).exists()
 
     context = {
         'recipe': recipe,
         'isFavoried': isFavoried,
+        'isSubscribed': isSubscribed,
     }
     return render(request, 'recipes/singlePage.html', context)
 
