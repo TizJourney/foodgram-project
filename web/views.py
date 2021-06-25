@@ -137,7 +137,9 @@ def follow_view(request):
     page_number = request.GET.get('page')
 
     follow_query = (
-        request.user.subscribed_to_user.filter(subscriber=request.user).prefetch_related('author__recipes')
+        request.user.subscribed_to_user
+        .filter(subscriber=request.user)
+        .prefetch_related('author__recipes')
     )
 
     paginator = Paginator(follow_query, FOLLOW_PER_PAGE)

@@ -14,9 +14,11 @@
                         </div>
                     </li>
                 {% endfor %}
-                <li class="card-user__item">
-                    <a href="#" class="card-user__link link">Еще 7 рецептов...</a>
-                </li>
+                {% if follow.author.recipes.count > 3 %}
+                    <li class="card-user__item">
+                        <a href="#" class="card-user__link link">Еще {{ follow.author.recipes.count}} рецептов...</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
         <div class="card-user__footer">
