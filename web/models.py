@@ -9,9 +9,8 @@ User = get_user_model()
 
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=40, unique=True, null=True)
-    measurement = models.CharField(
+    title = models.CharField(max_length=200)
+    dimension = models.CharField(
         'Единица измерения',
         max_length=200,
         help_text='Единица измерения ингридента. Обязательно к заполнению.'
@@ -22,7 +21,7 @@ class Ingredient(models.Model):
         verbose_name_plural = 'Ингридиенты'
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Recipe(models.Model):
