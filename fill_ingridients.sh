@@ -1,0 +1,1 @@
+source venv/Scripts/activate & python manage.py fill_ings ingredients.json
