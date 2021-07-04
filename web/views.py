@@ -8,13 +8,18 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from django.db.models import Q, Count
 
-from .models import Recipe
+from .models import Recipe, Ingredient, IngredientQuanity
 from .forms import RecipeForm
 
 from django.contrib.auth import get_user_model
 
 RECIPE_PER_PAGE = 6
 FOLLOW_PER_PAGE = 6
+
+NAME_PREFIX_LEN = len('nameIngredient_')
+VALUE_PREFIX_LEN = len('valueIngredient_')
+UNITS_PREFIX_LEN  = len('unitsIngredient_')
+
 
 User = get_user_model()
 
@@ -136,14 +141,58 @@ def recipe_view(request, recipe_id):
     return render(request, 'recipes/singlePage.html', context)
 
 
+def _get_ingredients(request):
+    ingridient_names = {}
+    ingridient_values = {}
+    ingridient_units = {}
+
+    ingredients = []
+
+    if not request.POST:
+        return []
+
+    for key, value in request.POST.items():
+        if key.startswith('nameIngredient'):
+            ingridient_names[key[NAME_PREFIX_LEN:]] = value
+        elif key.startswith('valueIngredient'):
+            ingridient_values[key[VALUE_PREFIX_LEN:]] = value
+        elif key.startswith('unitsIngredient'):
+            ingridient_units[key[UNITS_PREFIX_LEN:]] = value
+
+    for key, name in ingridient_names.items():
+        ingredients.append(
+            {
+                'name': name,
+                'value': ingridient_values.get(key),
+                'units': ingridient_units.get(key)
+            }
+        )
+    return ingredients
+
+def _save_recipe(form, author, ingredients):
+    recipe = form.save(commit=False)
+    recipe.author = author
+    recipe.save()
+    for item in ingredients:
+        ingredient = get_object_or_404(Ingredient, name=item['name'])
+        recipe_ingredient = IngredientQuanity(
+            recipe=recipe,            
+            value=item['value'],
+            ingredient=ingredient,
+        )
+        recipe_ingredient.save()
+    form.save_m2m()
+
 @login_required
 def new_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST, files=request.FILES or None)
         if form.is_valid():
-            form.instance.author = request.user
-            form.save()
-            return redirect('index')
+            ingredients = _get_ingredients(request)
+            if ingredients:
+                _save_recipe(form, request.user, ingredients)
+                return redirect('index')
+            form.add_error(None, 'В форме должны быть ингриденты')                            
 
         return render(
             request,

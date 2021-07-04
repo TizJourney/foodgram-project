@@ -7,7 +7,6 @@ from django.core.validators import MinValueValidator
 
 User = get_user_model()
 
-
 class Ingredient(models.Model):
     name = models.CharField(max_length=200)
     units = models.CharField(
@@ -22,24 +21,6 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.title
-
-class IngredientQuanity(models.Model):
-    name = models.CharField(max_length=200)
-    units = models.CharField(
-        'Единица измерения',
-        max_length=200,
-        help_text='Единица измерения ингридента. Обязательно к заполнению.'
-    )
-    value = models.IntegerField(
-        'Количество единиц в рецепте',
-    )
-
-    class Meta:
-        verbose_name = 'Количество ингридиента'
-        verbose_name_plural = 'Количества ингридиентов'
-
-    def __str__(self):
-        return self.title        
 
 
 class Recipe(models.Model):
@@ -60,8 +41,6 @@ class Recipe(models.Model):
     breakfast_tag = models.BooleanField('Завтрак', db_index=True)
     lunch_tag = models.BooleanField('Обед', db_index=True)
     dinner_tag = models.BooleanField('Ужин', db_index=True)
-
-    ingredients = models.ManyToManyField(IngredientQuanity, blank=True)
 
     pub_date = models.DateTimeField(
         'Дата создания',
@@ -89,7 +68,6 @@ class Recipe(models.Model):
         'Загрузить фото',
         upload_to='recipes/',
         help_text='Загрузка изображения. Опционально.',
-        #todo: remove
         blank=True,
         null=True,
     )
@@ -104,6 +82,36 @@ class Recipe(models.Model):
         return title
 
 
+class IngredientQuanity(models.Model):
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='ingredients',
+        verbose_name='ингридент',
+    )
+    ingredient = models.ForeignKey(
+        Ingredient,
+        on_delete=models.CASCADE,
+        related_name='recipe',
+        verbose_name='рецепт',
+    )
+    value = models.IntegerField(
+        'Количество единиц в рецепте',
+    )
+
+    class Meta:
+        unique_together = ('recipe', 'ingredient')
+        verbose_name = 'Количество ингридиента'
+        verbose_name_plural = 'Количества ингридиентов'
+
+    def __str__(self):
+        name = self.ingridient.name
+        recipe = self.recipe.name
+        value = self.value
+        return (
+            f'В рецепте {recipe} '
+            'используется ингридент "{name}" в количестве {value}'
+        )
 
 
 class Subscriber(models.Model):
