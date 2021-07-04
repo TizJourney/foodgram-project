@@ -24,11 +24,11 @@ class RecipeAdmin(admin.ModelAdmin):
 class IngredientAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
-        'title',
-        'dimension',
+        'name',
+        'units',
     )
-    search_fields = ('title',)
-    list_filter = ('dimension',)
+    search_fields = ('name',)
+    list_filter = ('units',)
 
 
 admin.site.register(Recipe, RecipeAdmin)

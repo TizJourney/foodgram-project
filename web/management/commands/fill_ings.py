@@ -15,7 +15,7 @@ class Command(BaseCommand):
         with open(options['data'], 'rt') as ings_file:
             data = json.load(ings_file)
             items = [
-                Ingredient(title=item['title'],dimension=item['dimension']) 
+                Ingredient(title=item['name'],dimension=item['units']) 
                 for item in data
                 ]
             Ingredient.objects.bulk_create(items)
