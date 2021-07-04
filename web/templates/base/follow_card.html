@@ -8,7 +8,9 @@
                 {% for recipe in follow.author.recipes.all|slice:":3" %}
                     <li class="card-user__item">
                         <a class="recipe link" href="{% url 'recipe' recipe_id=recipe.pk %}" target="_blank">
+                            {% if recipe.image %}
                             <img src="{{recipe.image.url}}" alt="{{ recipe.name }}" class="recipe__image">
+                            {% endif %}
                             <h3 class="recipe__title">{{ recipe.name }}</h3>
                             <p class="recipe__text"><span class="icon-time"></span> {{ recipe.time }} мин.</p>
                         </a>
