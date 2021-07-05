@@ -19,7 +19,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from django.http import JsonResponse
 import json
 
-from .serializers import FavoriteSerializer, SubscriberSerializer, IngredientSerializer
+from .serializers import FavoriteSerializer, SubscriberSerializer, IngredientSerializer, PurchasesSerializer
 from django.views.generic.list import ListView
 from rest_framework.renderers import JSONRenderer
 from django.contrib.auth import get_user_model
@@ -77,19 +77,8 @@ def subscriptions_delete(request, author_id):
     return JsonResponse(SubscriberSerializer(obj).data, status=status.HTTP_200_OK)
 
 
-class Ingredients(generics.ListAPIView):
-    serializer_class = IngredientSerializer
-    MAX_LIMIT = 10 
-    
-    def get_queryset(self):
-        query = self.request.GET.get('query').lower()
-        return (
-            Ingredient.objects
-            .filter(name__istartswith=query)[:self.MAX_LIMIT]
-        )
-
 @renderer_classes((JSONRenderer,))
-class purchasesView(View):
+class PurchasesView(View):
     """
     фунциональность по изменению состояния покупок пользователя
     """
@@ -102,7 +91,7 @@ class purchasesView(View):
         recipe = get_object_or_404(Recipe, pk=json_data.get('id'))
         obj, created = Purchases.objects.get_or_create(
             user=request.user, recipe=recipe)
-        return JsonResponse(SubscriberSerializer(obj).data, status=status.HTTP_200_OK)
+        return JsonResponse(PurchasesSerializer(obj).data, status=status.HTTP_200_OK)
 
 
 @login_required
@@ -110,4 +99,16 @@ def purchases_delete(request, recipe_id):
     obj = get_object_or_404(
         Purchases, user=request.user, recipe__pk=recipe_id)
     obj.delete()
-    return JsonResponse(SubscriberSerializer(obj).data, status=status.HTTP_200_OK)
+    return JsonResponse(PurchasesSerializer(obj).data, status=status.HTTP_200_OK)
+
+
+class Ingredients(generics.ListAPIView):
+    serializer_class = IngredientSerializer
+    MAX_LIMIT = 10 
+    
+    def get_queryset(self):
+        query = self.request.GET.get('query').lower()
+        return (
+            Ingredient.objects
+            .filter(name__istartswith=query)[:self.MAX_LIMIT]
+        )
