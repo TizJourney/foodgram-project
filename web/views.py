@@ -182,7 +182,7 @@ def _save_recipe(form, author, ingredients, recipe=None):
     for item in ingredients:
         ingredient = get_object_or_404(Ingredient, name=item['name'])
         recipe_ingredient = IngredientQuanity(
-            recipe=recipe,            
+            recipe=form.instance,            
             value=item['value'],
             ingredient=ingredient,
         )
