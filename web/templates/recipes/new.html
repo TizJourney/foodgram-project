@@ -67,9 +67,13 @@
                 </div>
                 {% elif field.name == 'image' %}
                 <div class="form__group">
+                    {% if field.value %}
+                    <span class="form__label">Текущее фото: {{field.value}}. Загрузить новое</span>
+                    {% else %}
                     <span class="form__label">Загрузить фото</span>
+                    {% endif %}
                     <div class="form__field-group">
-                        <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}" value="{{ field.value }}">
+                        <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}" value="{{ form.instance.image }}">
                         {% for error in field.errors %}
                         <span class="form__error">{{ error }}</span>
                         {% endfor %}
@@ -79,7 +83,7 @@
                 <div class="form__group">
                     <label for="{{ field.id_for_label }}" class="form__label">{{field.label}}</label>
                     <div class="form__field-group">
-                        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form__input" value="{{ field.value }}">
+                        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form__input">
                         {% for error in field.errors %}
                         <span class="form__error">{{ error }}</span>
                         {% endfor %}
@@ -90,6 +94,7 @@
 
             <div class="form__footer">
                 <button class="button button_style_blue">Создать рецепт</button>
+                <a style="margin-left: 2.5em" href="#" class="form__ingredient-link">Удалить</a>
             </div>
         </form>
     </div>
