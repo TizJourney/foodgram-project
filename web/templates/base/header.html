@@ -1,3 +1,5 @@
+{% load header_tags %}
+
 <header class="header">
     <nav class="nav">
         <div class="nav__container container">
@@ -8,7 +10,7 @@
                 <li class="nav__item"><a href="{% url 'new_recipe' %}" class="nav__link link">Создать рецепт</a></li>
                 <li class="nav__item"><a href="{% url 'favorite' %}" class="nav__link link">Избранное</a></li>
                 <li class="nav__item"><a href="{% url 'shop_list' %}" class="nav__link link">Список покупок</a> <span
-                        class="badge badge_style_blue nav__badge" id="counter">4</span></li>
+                        class="badge badge_style_blue nav__badge" id="counter">{{user|count_shop_items}}</span></li>
                 {% endif %}                        
             </ul>
             {% if user.is_authenticated %}
