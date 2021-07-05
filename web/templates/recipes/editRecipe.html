@@ -101,7 +101,7 @@
             {% endfor %}
 
             <div class="form__field-group">
-                {% for name, error in form.errors.items %}
+                {% for error in form.non_field_errors %}
                 <span class="form__error">{{ error }}</span>
                 {% endfor %}
             </div>
