@@ -7,5 +7,5 @@
         <h3 class="recipe__title">{{recipe.name}}</h3>
         <p class="recipe__text"><span class="icon-time"></span> {{recipe.time}} мин.</p>
     </div>
-    <a href="#" class="shopping-list__button link">Удалить</a>
+    <a href="{% url 'shop_list_delete' recipe_id=recipe.pk %}" class="shopping-list__button link">Удалить</a>
 </li>

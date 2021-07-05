@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from django.db.models import Q, Count
 
-from .models import Recipe, Ingredient, IngredientQuanity
+from .models import Recipe, Ingredient, IngredientQuanity, Purchases
 from django.core.exceptions import PermissionDenied
 from .forms import RecipeForm
 
@@ -274,6 +274,7 @@ def delete_recipe(request, recipe_id):
     if request.user != recipe.author:
         raise PermissionDenied()
     recipe.delete()
+    return redirect('index')
 
 
 @login_required
@@ -289,3 +290,10 @@ def shop_list(request):
         'recipes/shopList.html',
         context
     )
+
+@login_required
+def shop_list_delete(request, recipe_id):
+    obj = get_object_or_404(
+        Purchases, user=request.user, recipe__pk=recipe_id)
+    obj.delete()
+    return redirect('shop_list')
