@@ -100,6 +100,12 @@
                 {% endif %}
             {% endfor %}
 
+            <div class="form__field-group">
+                {% for name, error in form.errors.items %}
+                <span class="form__error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
             <div class="form__footer">
                 <button class="button button_style_blue">{% if new %}Создать рецепт{% else %}Сохранить{% endif %}</button>
                 {% if new == False %}
