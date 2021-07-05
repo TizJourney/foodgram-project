@@ -50,9 +50,11 @@ def _prepare_recipe_content(post_query, request):
 
     if user is not None:
         favoriedQuery = Q(favorite_by_users__user=user)
+        shopListQuery = Q(purchase_by_users__user=user)
         extended_query = (
             extended_query
             .annotate(isFavoried=Count('favorite_by_users', filter=favoriedQuery))
+            .annotate(isInShopList=Count('purchase_by_users', filter=shopListQuery))
         )
 
     paginator = Paginator(extended_query, RECIPE_PER_PAGE)
