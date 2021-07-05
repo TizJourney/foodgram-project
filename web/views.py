@@ -207,13 +207,13 @@ def edit_recipe(request, recipe_id):
 
         return render(
             request,
-            'recipes/new.html',
-            {'form': form }
+            'recipes/editRecipe.html',
+            {'form': form, 'new': False }
         )
 
     form = RecipeForm()
     form.instance = recipe
-    return render(request, 'recipes/new.html', {'form': form})
+    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': False })
 
 
 @login_required
@@ -229,12 +229,12 @@ def new_recipe(request):
 
         return render(
             request,
-            'recipes/new.html',
-            {'form': form }
+            'recipes/editRecipe.html',
+            {'form': form, 'new': True }
         )
 
     form = RecipeForm()
-    return render(request, 'recipes/new.html', {'form': form})
+    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': True })
 
 @login_required
 def follow_view(request):
