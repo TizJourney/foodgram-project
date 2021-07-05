@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q, Count
 
 from .models import Recipe, Ingredient, IngredientQuanity
+from django.core.exceptions import PermissionDenied
 from .forms import RecipeForm
 
 from django.contrib.auth import get_user_model
@@ -191,8 +192,10 @@ def _save_recipe(form, author, ingredients, recipe=None):
 @login_required
 def edit_recipe(request, recipe_id):
 
-    # todo: проверить автора!
-    recipe = get_object_or_404(Ingredient, pk=recipe_id)
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    if request.user != recipe.author:
+        raise PermissionDenied()
+
     if request.method == 'POST':
         form = RecipeForm(request.POST, files=request.FILES or None)
         if form.is_valid():
