@@ -162,3 +162,28 @@ class Favorite(models.Model):
         user = self.user
         recipe = self.recipe
         return f'Запомнить для @{user} рецепт @{recipe}'
+
+
+class Purchases(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='recipe_purchases',
+        verbose_name='Список покупок',
+        help_text='Список покупок пользователя',
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='purchase_by_users',
+        verbose_name='В покупках у пользвателя',
+        help_text='Пользователи, у которых рецепт в покупках',
+    )
+
+    class Meta:
+        unique_together = ('user', 'recipe')
+
+    def __str__(self):
+        user = self.user
+        recipe = self.recipe
+        return f'Покупка для @{user} рецепта @{recipe}'
