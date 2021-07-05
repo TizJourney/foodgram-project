@@ -169,10 +169,15 @@ def _get_ingredients(request):
         )
     return ingredients
 
-def _save_recipe(form, author, ingredients):
-    recipe = form.save(commit=False)
-    recipe.author = author
-    recipe.save()
+def _save_recipe(form, author, ingredients, recipe=None):
+    if recipe is None:
+        recipe = form.save(commit=False)
+        recipe.author = author
+        recipe.save()
+    else:
+        form.instance = recipe
+        form.save(commit=False)
+
     for item in ingredients:
         ingredient = get_object_or_404(Ingredient, name=item['name'])
         recipe_ingredient = IngredientQuanity(
@@ -182,6 +187,29 @@ def _save_recipe(form, author, ingredients):
         )
         recipe_ingredient.save()
     form.save_m2m()
+
+@login_required
+def edit_recipe(request, recipe_id):
+    recipe = get_object_or_404(Ingredient, pk=recipe_id)
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, files=request.FILES or None)
+        if form.is_valid():
+            ingredients = _get_ingredients(request)
+            if ingredients:
+                _save_recipe(form, request.user, ingredients)
+                return redirect('index')
+            form.add_error(None, 'В форме должны быть ингриденты')                            
+
+        return render(
+            request,
+            'recipes/new.html',
+            {'form': form }
+        )
+
+    form = RecipeForm(recipe)
+    return render(request, 'recipes/new.html', {'form': form})
+
+
 
 @login_required
 def new_recipe(request):

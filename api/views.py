@@ -85,5 +85,5 @@ class Ingredients(generics.ListAPIView):
         query = self.request.GET.get('query').lower()
         return (
             Ingredient.objects
-            .filter(title__istartswith=query)[:self.MAX_LIMIT]
+            .filter(name__istartswith=query)[:self.MAX_LIMIT]
         )

@@ -8,6 +8,7 @@ urlpatterns = [
     path('recipes/<int:author_id>/', views.recipes_by_author, name='recipes_by_author'),
     path('favorite', views.favorite, name='favorite'),
     path('new_recipe/', views.new_recipe, name='new_recipe'),
+    path('edit_recipe/<int:recipe_id>/', views.edit_recipe, name='edit_recipe'),
     path('recipe/<int:recipe_id>/', views.recipe_view, name='recipe'),
     path('follow/', views.follow_view, name='follow'),
     # path('follow/', views.follow_index, name='follow_index'),
