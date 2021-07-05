@@ -135,11 +135,14 @@ def recipe_view(request, recipe_id):
         user=request.user).exists()
     isSubscribed = request.user and recipe.author.subscribed_by_user.filter(
         subscriber=request.user).exists()
+    isInShopList = request.user and recipe.purchase_by_users.filter(
+        user=request.user).exists()
 
     context = {
         'recipe': recipe,
         'isFavoried': isFavoried,
         'isSubscribed': isSubscribed,
+        'isInShopList': isInShopList,
     }
     return render(request, 'recipes/singlePage.html', context)
 
@@ -276,7 +279,7 @@ def shop_list(request):
     query = request.user.recipe_purchases.all()
 
     context = {
-        'purchases': query,
+        'shop_list': query,
     }
 
     return render(
