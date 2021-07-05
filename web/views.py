@@ -190,6 +190,8 @@ def _save_recipe(form, author, ingredients, recipe=None):
 
 @login_required
 def edit_recipe(request, recipe_id):
+
+    # todo: проверить автора!
     recipe = get_object_or_404(Ingredient, pk=recipe_id)
     if request.method == 'POST':
         form = RecipeForm(request.POST, files=request.FILES or None)
@@ -208,7 +210,6 @@ def edit_recipe(request, recipe_id):
 
     form = RecipeForm(recipe)
     return render(request, 'recipes/new.html', {'form': form})
-
 
 
 @login_required
