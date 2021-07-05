@@ -269,3 +269,18 @@ def delete_recipe(request, recipe_id):
     if request.user != recipe.author:
         raise PermissionDenied()
     recipe.delete()
+
+
+@login_required
+def shop_list(request):
+    query = request.user.recipe_purchases.all()
+
+    context = {
+        'purchases': query,
+    }
+
+    return render(
+        request,
+        'recipes/shopList.html',
+        context
+    )
