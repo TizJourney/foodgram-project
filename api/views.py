@@ -1,4 +1,4 @@
-from web.models import Favorite, Recipe, Subscriber, Ingredient
+from web.models import Favorite, Recipe, Subscriber, Ingredient, Purchases
 from django.shortcuts import render
 
 from smtplib import SMTPException
@@ -87,3 +87,27 @@ class Ingredients(generics.ListAPIView):
             Ingredient.objects
             .filter(name__istartswith=query)[:self.MAX_LIMIT]
         )
+
+@renderer_classes((JSONRenderer,))
+class purchasesView(View):
+    """
+    фунциональность по изменению состояния покупок пользователя
+    """
+
+    def get(self, request):
+        return response.Response(request.user.recipe_purchases.all(), status=status.HTTP_200_OK)
+
+    def post(self, request):
+        json_data = json.loads(request.body)
+        recipe = get_object_or_404(Recipe, pk=json_data.get('id'))
+        obj, created = Purchases.objects.get_or_create(
+            user=request.user, recipe=recipe)
+        return JsonResponse(SubscriberSerializer(obj).data, status=status.HTTP_200_OK)
+
+
+@login_required
+def purchases_delete(request, recipe_id):
+    obj = get_object_or_404(
+        Purchases, user=request.user, recipe__pk=recipe_id)
+    obj.delete()
+    return JsonResponse(SubscriberSerializer(obj).data, status=status.HTTP_200_OK)
