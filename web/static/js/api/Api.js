@@ -48,3 +48,4 @@ class Api {
   removePurchases(id) {
     return this._request(`purchases/${id}/`, 'DELETE');
   }
+}
