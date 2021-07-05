@@ -211,7 +211,8 @@ def edit_recipe(request, recipe_id):
             {'form': form }
         )
 
-    form = RecipeForm(recipe)
+    form = RecipeForm()
+    form.instance = recipe
     return render(request, 'recipes/new.html', {'form': form})
 
 
