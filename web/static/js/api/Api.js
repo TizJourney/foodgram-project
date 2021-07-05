@@ -28,62 +28,23 @@ class Api {
     return this._request('favorites/', 'POST', {id});
   }
   removeFavorites(id) {
-    return this._request(`favorites/${id}/`, 'DELETE', {id});
+    return this._request(`favorites/${id}/`, 'DELETE');
   }
   addSubscriptions(id) {
     return this._request('subscriptions/', 'POST', {id});
   }
   removeSubscriptions(id) {
-    return this._request(`subscriptions/${id}/`, 'DELETE', {id});
+    return this._request(`subscriptions/${id}/`, 'DELETE');
   }
   getIngredients(text) {
     return this._request(`ingredients/?query=${text}`, 'GET');
   }
-
-
-  getPurchases() {
-    return fetch(`${this.apiUrl}/purchases/`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': this.token
-      }
-    })
-      .then(e => {
-        if (e.ok) {
-          return e.json()
-        }
-        return Promise.reject(e.statusText)
-      })
+  getPurchases(id) {
+    return this._request('purchases/', 'GET');
   }
   addPurchases(id) {
-    return fetch(`${this.apiUrl}/purchases/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id: id
-      })
-    })
-      .then(e => {
-        if (e.ok) {
-          return e.json()
-        }
-        return Promise.reject(e.statusText)
-      })
+    return this._request('purchases/', 'POST', {id});
   }
   removePurchases(id) {
-    return fetch(`${this.apiUrl}/purchases/${id}/`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(e => {
-        if (e.ok) {
-          return e.json()
-        }
-        return Promise.reject(e.statusText)
-      })
+    return this._request(`purchases/${id}/`, 'DELETE');
   }
-}
