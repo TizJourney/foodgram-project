@@ -198,6 +198,8 @@ def edit_recipe(request, recipe_id):
 
     if request.method == 'POST':
         form = RecipeForm(request.POST, files=request.FILES or None)
+        form.instance = recipe
+
         if form.is_valid():
             ingredients = _get_ingredients(request)
             if ingredients:
@@ -211,8 +213,7 @@ def edit_recipe(request, recipe_id):
             {'form': form, 'new': False }
         )
 
-    form = RecipeForm()
-    form.instance = recipe
+    form = RecipeForm(instance=recipe)
     return render(request, 'recipes/editRecipe.html', {'form': form, 'new': False })
 
 
@@ -266,4 +267,3 @@ def delete_recipe(request, recipe_id):
     if request.user != recipe.author:
         raise PermissionDenied()
     recipe.delete()
-    return redirect('index')
