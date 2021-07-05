@@ -19,10 +19,11 @@ FOLLOW_PER_PAGE = 6
 
 NAME_PREFIX_LEN = len('nameIngredient_')
 VALUE_PREFIX_LEN = len('valueIngredient_')
-UNITS_PREFIX_LEN  = len('unitsIngredient_')
+UNITS_PREFIX_LEN = len('unitsIngredient_')
 
 
 User = get_user_model()
+
 
 def _prepare_recipe_content(post_query, request):
 
@@ -83,6 +84,7 @@ def index(request):
         context
     )
 
+
 def recipes_by_author(request, author_id):
     author = get_object_or_404(User, id=author_id)
 
@@ -101,7 +103,7 @@ def recipes_by_author(request, author_id):
         request,
         'recipes/recipes.html',
         context
-    )    
+    )
 
 
 @login_required
@@ -171,27 +173,26 @@ def _get_ingredients(request):
     return ingredients
 
 def _save_recipe(form, author, ingredients, recipe=None):
-    if form.instance is None:
+    if recipe is None:
         recipe = form.save(commit=False)
         recipe.author = author
         recipe.save()
-    else:
-        form.instance.ingredients.all().delete()
-        form.save(commit=False)
-    
+
+    recipe.ingredients.all().delete()
+
     for item in ingredients:
         ingredient = get_object_or_404(Ingredient, name=item['name'])
         recipe_ingredient = IngredientQuanity(
-            recipe=form.instance,            
+            recipe=form.instance,
             value=item['value'],
             ingredient=ingredient,
         )
         recipe_ingredient.save()
     form.save_m2m()
 
+
 @login_required
 def edit_recipe(request, recipe_id):
-
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     if request.user != recipe.author:
         raise PermissionDenied()
@@ -203,18 +204,18 @@ def edit_recipe(request, recipe_id):
         if form.is_valid():
             ingredients = _get_ingredients(request)
             if ingredients:
-                _save_recipe(form, request.user, ingredients)
+                _save_recipe(form, request.user, ingredients, recipe)
                 return redirect('index')
-            form.add_error(None, 'В форме должны быть ингриденты')                            
+            form.add_error(None, 'В форме должны быть ингридиенты')
 
         return render(
             request,
             'recipes/editRecipe.html',
-            {'form': form, 'new': False }
+            {'form': form, 'new': False}
         )
 
     form = RecipeForm(instance=recipe)
-    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': False })
+    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': False})
 
 
 @login_required
@@ -226,16 +227,17 @@ def new_recipe(request):
             if ingredients:
                 _save_recipe(form, request.user, ingredients)
                 return redirect('index')
-            form.add_error(None, 'В форме должны быть ингриденты')                            
+            form.add_error(None, 'В форме должны быть ингриденты')
 
         return render(
             request,
             'recipes/editRecipe.html',
-            {'form': form, 'new': True }
+            {'form': form, 'new': True}
         )
 
     form = RecipeForm()
-    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': True })
+    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': True})
+
 
 @login_required
 def follow_view(request):
