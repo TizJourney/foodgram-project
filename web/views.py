@@ -278,7 +278,7 @@ def delete_recipe(request, recipe_id):
 
 @login_required
 def shop_list(request):
-    query = request.user.recipe_purchases.all()
+    query = Recipe.objects.filter(purchase_by_users__user=request.user)
 
     context = {
         'shop_list': query,
