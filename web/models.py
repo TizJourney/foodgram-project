@@ -20,7 +20,7 @@ class Ingredient(models.Model):
         verbose_name_plural = 'Ингридиенты'
 
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Recipe(models.Model):
@@ -105,7 +105,7 @@ class IngredientQuanity(models.Model):
         verbose_name_plural = 'Количества ингридиентов'
 
     def __str__(self):
-        name = self.ingridient.name
+        name = self.ingredient.name
         recipe = self.recipe.name
         value = self.value
         return (

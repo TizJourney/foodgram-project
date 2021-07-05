@@ -171,14 +171,14 @@ def _get_ingredients(request):
     return ingredients
 
 def _save_recipe(form, author, ingredients, recipe=None):
-    if recipe is None:
+    if form.instance is None:
         recipe = form.save(commit=False)
         recipe.author = author
         recipe.save()
     else:
-        form.instance = recipe
+        form.instance.ingredients.all().delete()
         form.save(commit=False)
-
+    
     for item in ingredients:
         ingredient = get_object_or_404(Ingredient, name=item['name'])
         recipe_ingredient = IngredientQuanity(
