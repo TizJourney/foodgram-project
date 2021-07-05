@@ -1,12 +1,12 @@
 {% extends "base/base.html" %}
 {% load static %}
-{% block title %}Создание рецепта{% endblock %}
+{% block title %}{% if new %}Создание рецепта{% else %}Редактирование рецепта{% endif %}{% endblock %}
 {% block css %} {% static 'pages/form.css' %} {% endblock %}
 
 {% block content %}
 <main class="main container">
     <div class="main__header">
-        <h1 class="main__title">Создание рецепта</h1>
+        <h1 class="main__title">{% if new %}Создание рецепта{% else %}Редактирование рецепта{% endif %}</h1>
     </div>
     <div class="form-container">
         <form class="form" method="post" enctype="multipart/form-data">
@@ -101,8 +101,10 @@
             {% endfor %}
 
             <div class="form__footer">
-                <button class="button button_style_blue">Создать рецепт</button>
-                <a style="margin-left: 2.5em" href="#" class="form__ingredient-link">Удалить</a>
+                <button class="button button_style_blue">{% if new %}Создать рецепт{% else %}Сохранить{% endif %}</button>
+                {% if new == False %}
+                    <a style="margin-left: 2.5em" href="{% url 'delete_recipe' recipe_id=form.instance.id %}" class="form__ingredient-link">Удалить</a>
+                {% endif %}
             </div>
         </form>
     </div>
