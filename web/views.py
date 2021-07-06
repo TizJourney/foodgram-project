@@ -336,3 +336,11 @@ def page_not_found(request, exception):
         'message': 'Страница не найдена'
         },
         status=404)
+
+
+def server_error(request):
+    return render(request, 'base/message.html', {
+        'title': 'Ошибка 500',
+        'message': 'Ошибка сервера'
+        },
+        status=500)

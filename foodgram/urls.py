@@ -13,7 +13,7 @@ urlpatterns = [
 ]
 
 handler404 = 'web.views.page_not_found'
-#handler500 = 'web.views.server_error'
+handler500 = 'web.views.server_error'
 
 if settings.DEBUG:
     import debug_toolbar
