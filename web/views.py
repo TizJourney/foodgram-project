@@ -1,21 +1,16 @@
-from django.shortcuts import render
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-
 from collections import defaultdict
 
-from django.core.paginator import Paginator
-
-from django.shortcuts import get_object_or_404, redirect, render
-
-from django.db.models import Q, Count
-from django.http import HttpResponse
-
-from .models import Recipe, Ingredient, IngredientQuanity, Purchases
-from django.core.exceptions import PermissionDenied
-from .forms import RecipeForm
-
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
+from django.db.models import Count, Q
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+
+from .forms import RecipeForm
+from .models import Ingredient, IngredientQuanity, Purchases, Recipe
 
 RECIPE_PER_PAGE = 6
 FOLLOW_PER_PAGE = 6

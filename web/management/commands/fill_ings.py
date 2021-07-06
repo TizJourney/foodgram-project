@@ -1,7 +1,8 @@
-from django.core.management.base import BaseCommand, CommandError
-from web.models import Ingredient
-
 import json
+
+from django.core.management.base import BaseCommand, CommandError
+
+from web.models import Ingredient
 
 
 class Command(BaseCommand):
