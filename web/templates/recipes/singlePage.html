@@ -41,8 +41,10 @@
                     <li class="single-card__item">
                         <p class="single-card__text"><span class="icon-user"></span>{{recipe.author}}</p>
                     </li>
+                    {% if user.is_superuser or user == recipe.author %}
                     <li class="single-card__item"> <a style="margin-left: 2.5em" href="{% url 'edit_recipe' recipe_id=recipe.pk %}"
                             class="single-card__text">Редактировать рецепт</a></li>
+                    {% endif %}
                 </ul>
             </div>
             <ul class="single-card__items">

@@ -206,7 +206,7 @@ def _save_recipe(form, author, ingredients, recipe=None):
 @login_required
 def edit_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    if request.user != recipe.author:
+    if not request.user.is_superuser and request.user != recipe.author:
         raise PermissionDenied()
 
     if request.method == 'POST':
@@ -279,7 +279,7 @@ def follow_view(request):
 @login_required
 def delete_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    if request.user != recipe.author:
+    if not request.user.is_superuser and request.user != recipe.author:
         raise PermissionDenied()
     recipe.delete()
     return redirect('index')
