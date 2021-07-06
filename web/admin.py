@@ -22,11 +22,18 @@ class RecipeAdmin(admin.ModelAdmin):
         'lunch_tag',
         'time',
         'description',
-        'image'
+        'image',
+        'favorite_count'
     )
+
+    readonly_fields = ('favorite_count',)
     search_fields = ('name',)
     list_filter = ('pub_date',)
     empty_value_display = '-пусто-'
+
+    def favorite_count(self, obj):
+        return obj.favorite_by_users.count()
+
 
 class IngredientAdmin(admin.ModelAdmin):
     list_display = (
