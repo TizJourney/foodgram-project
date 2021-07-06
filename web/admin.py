@@ -1,8 +1,15 @@
 from django.contrib import admin
 
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
-from .models import Recipe, Ingredient
+from .models import Recipe, Ingredient, IngredientQuanity, Subscriber, Favorite, Purchases
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+class CustomUserAdmin(UserAdmin):
+    list_filter = ('email', 'username')
 
 
 class RecipeAdmin(admin.ModelAdmin):
@@ -30,6 +37,24 @@ class IngredientAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_filter = ('units',)
 
+class IngredientQuanityAdmin(admin.ModelAdmin):
+    pass
 
+class SubscriberAdmin(admin.ModelAdmin):
+    pass
+
+class FavoriteAdmin(admin.ModelAdmin):
+    pass
+
+class PurchasesAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
+admin.site.register(IngredientQuanity, IngredientQuanityAdmin)
+admin.site.register(Subscriber, SubscriberAdmin)
+admin.site.register(Favorite, FavoriteAdmin)
+admin.site.register(Purchases, PurchasesAdmin)
+

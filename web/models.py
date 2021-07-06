@@ -109,8 +109,8 @@ class IngredientQuanity(models.Model):
         recipe = self.recipe.name
         value = self.value
         return (
-            f'В рецепте {recipe} '
-            'используется ингридент "{name}" в количестве {value}'
+            f'В рецепте "{recipe}" '
+            f'используется "{name}" в количестве {value}'
         )
 
 
@@ -132,6 +132,9 @@ class Subscriber(models.Model):
 
     class Meta:
         unique_together = ('author', 'subscriber')
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+
 
     def __str__(self):
         subscriber = self.subscriber
@@ -157,6 +160,9 @@ class Favorite(models.Model):
 
     class Meta:
         unique_together = ('user', 'recipe')
+        verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранные'
+
 
     def __str__(self):
         user = self.user
@@ -182,6 +188,9 @@ class Purchases(models.Model):
 
     class Meta:
         unique_together = ('user', 'recipe')
+        verbose_name = 'Покупка'
+        verbose_name_plural = 'Покупки'
+
 
     def __str__(self):
         user = self.user
