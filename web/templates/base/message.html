@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}{{title}}{% endblock %}
+{% block css %} {% static 'pages/form.css' %}{% endblock %}
+
+{% block content %}
+<main class="main container">
+    <div class="main__header">
+        <h1 class="main__title">{{title}}</h1>
+    </div>
+    <div class="main__header">
+        <p class="main__title">{{message}}</p>
+    </div>
+    <div class="custom-center-block">
+        <div class="custom-button-block">
+            <a href="{% url 'index' %}" class="button button_style_blue">Перейти на главную</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

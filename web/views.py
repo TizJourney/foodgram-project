@@ -329,3 +329,10 @@ def shop_list_download(request):
     response = HttpResponse(content, content_type='text/plain; charset=utf8')
     response['Content-Disposition'] = 'attachment; filename=shop_list.txt'
     return response
+
+def page_not_found(request, exception):
+    return render(request, 'base/message.html', {
+        'title': 'Ошибка 404',
+        'message': 'Страница не найдена'
+        },
+        status=404)
