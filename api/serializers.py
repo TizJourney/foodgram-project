@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from web.models import Favorite, Subscriber, Ingredient, Purchases
+from web.models import Favorite, Ingredient, Purchases, Subscriber
 
 
 class FavoriteSerializer(serializers.ModelSerializer):

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 from collections import defaultdict
@@ -68,11 +68,12 @@ def _prepare_recipe_content(post_query, request):
         'filter': filter_context
     }
 
+
 def _message_response(title='', message=''):
     message = ''
     base_url = reverse('message')
     url = f'{base_url}?title={title}&message={message}'
-    return redirect(url)    
+    return redirect(url)
 
 
 def index(request):
@@ -145,12 +146,19 @@ def favorite(request):
 
 def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    isFavoried = request.user.is_authenticated and recipe.favorite_by_users.filter(
-        user=request.user).exists()
-    isSubscribed = request.user.is_authenticated and recipe.author.subscribed_by_user.filter(
-        subscriber=request.user).exists()
-    isInShopList = request.user.is_authenticated and recipe.purchase_by_users.filter(
-        user=request.user).exists()
+    isFavoried = (
+        request.user.is_authenticated
+        and recipe.favorite_by_users.filter(user=request.user).exists()
+    )
+    isSubscribed = (
+        request.user.is_authenticated
+        and recipe.author.subscribed_by_user.filter(
+            subscriber=request.user).exists()
+    )
+    isInShopList = (
+        request.user.is_authenticated and 
+        recipe.purchase_by_users.filter(user=request.user).exists()
+    )
 
     context = {
         'recipe': recipe,
@@ -190,11 +198,12 @@ def _get_ingredients(request):
         )
     return ingredients
 
+
 def _save_recipe(form, author, ingredients, recipe=None):
-    recipe_from_form = form.save(commit=False)    
+    recipe_from_form = form.save(commit=False)
     if recipe is None:
         recipe_from_form.author = author
-    recipe_from_form.save()        
+    recipe_from_form.save()
 
     recipe_from_form.ingredients.all().delete()
 
@@ -223,7 +232,7 @@ def edit_recipe(request, recipe_id):
             ingredients = _get_ingredients(request)
             if ingredients:
                 _save_recipe(form, request.user, ingredients, recipe)
-                return _message_response(title = 'Рецепт успешно изменён')
+                return _message_response(title='Рецепт успешно изменён')
             form.add_error(None, 'В форме должны быть ингридиенты')
 
         return render(
@@ -233,9 +242,11 @@ def edit_recipe(request, recipe_id):
         )
 
     form = RecipeForm(instance=recipe)
-    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': False, 'nav_page': 'edit_recipe'})
-
-
+    return render(
+        request,
+        'recipes/editRecipe.html',
+        {'form': form, 'new': False, 'nav_page': 'edit_recipe'}
+    )
 
 
 @login_required
@@ -246,7 +257,7 @@ def new_recipe(request):
             ingredients = _get_ingredients(request)
             if ingredients:
                 _save_recipe(form, request.user, ingredients)
-                return _message_response(title = 'Рецепт успешно создан')
+                return _message_response(title='Рецепт успешно создан')
             form.add_error(None, 'В форме должны быть ингриденты')
 
         return render(
@@ -256,7 +267,11 @@ def new_recipe(request):
         )
 
     form = RecipeForm()
-    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': True, 'nav_page': 'new_recipe'})
+    return render(
+        request,
+        'recipes/editRecipe.html',
+        {'form': form, 'new': True, 'nav_page': 'new_recipe'}
+    )
 
 
 @login_required
@@ -290,7 +305,7 @@ def delete_recipe(request, recipe_id):
     if not request.user.is_superuser and request.user != recipe.author:
         raise PermissionDenied()
     recipe.delete()
-    return _message_response(title = 'Рецепт успешно удалён')
+    return _message_response(title='Рецепт успешно удалён')
 
 
 @login_required
@@ -308,12 +323,14 @@ def shop_list(request):
         context
     )
 
+
 @login_required
 def shop_list_delete(request, recipe_id):
     obj = get_object_or_404(
         Purchases, user=request.user, recipe__pk=recipe_id)
     obj.delete()
     return redirect('shop_list')
+
 
 @login_required
 def shop_list_download(request):
@@ -333,7 +350,6 @@ def shop_list_download(request):
         ]
     )
 
-
     response = HttpResponse(content, content_type='text/plain; charset=utf8')
     response['Content-Disposition'] = 'attachment; filename=shop_list.txt'
     return response
@@ -345,14 +361,15 @@ def message(request):
     return render(request, 'base/message.html', {
         'title': title,
         'message': message
-        },
+    },
     )
+
 
 def page_not_found(request, exception):
     return render(request, 'base/message.html', {
         'title': 'Ошибка 404',
         'message': 'Страница не найдена'
-        },
+    },
         status=404)
 
 
@@ -360,5 +377,5 @@ def server_error(request):
     return render(request, 'base/message.html', {
         'title': 'Ошибка 500',
         'message': 'Ошибка сервера'
-        },
+    },
         status=500)

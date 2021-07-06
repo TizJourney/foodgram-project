@@ -1,24 +1,18 @@
-from web.models import Favorite, Recipe, Subscriber, Ingredient, Purchases
-from django.shortcuts import render
-
-from django.shortcuts import get_object_or_404
-from rest_framework import response, status
-from django.contrib.auth.decorators import login_required
-
-from django.views import View
-from rest_framework.decorators import renderer_classes
-from django.http import JsonResponse
 import json
 
-from .serializers import (
-    FavoriteSerializer,
-    SubscriberSerializer,
-    IngredientSerializer,
-    PurchasesSerializer
-)
-from rest_framework.renderers import JSONRenderer
 from django.contrib.auth import get_user_model
-from rest_framework import generics
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
+from django.views import View
+from rest_framework import generics, response, status
+from rest_framework.decorators import renderer_classes
+from rest_framework.renderers import JSONRenderer
+
+from web.models import Favorite, Ingredient, Purchases, Recipe, Subscriber
+
+from .serializers import (FavoriteSerializer, IngredientSerializer,
+                          PurchasesSerializer, SubscriberSerializer)
 
 User = get_user_model()
 
