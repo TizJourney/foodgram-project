@@ -1,11 +1,11 @@
 <nav class="pagination" aria-label="Search results pages">
     <ul class="pagination__container">
         {% if items.has_previous %}
-            <li class="pagination__item"><a class="pagination__link link" href="#"><span
+            <li class="pagination__item"><a href="?page={{ items.previous_page_number }}" class="pagination__link link" href="#"><span
                 class="icon-left"></span></a></li>
         {% else %}
         <!-- добавить выключенный вариант -->
-        <li class="pagination__item"><a class="pagination__link link" href="#"><span class="icon-left"></span></a></li>
+        <li class="pagination__item disabled"><span class="icon-left"></span></a></li>
         {% endif %}
         {% for i in paginator.page_range %}
                 {% if items.number == i %}
@@ -18,9 +18,7 @@
         {% if items.has_next %}
             <li class="pagination__item"><a class="pagination__link link" href="?page={{ items.next_page_number }}"><span class="icon-right"></span></a></li>
         {% else %}
-            <!-- добавить выключенный вариант -->
-            <li class="pagination__item disabled"><a class="pagination__link link" href="?page={{ items.next_page_number }}"><span class="icon-right"></span></a></li>
-                <!-- <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Следующая &raquo;</a></li> -->
+            <li class="pagination__item disabled"><span class="icon-right"></span></a></li>
         {% endif %}
     </ul>
 </nav>
