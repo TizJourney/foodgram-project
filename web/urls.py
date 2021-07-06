@@ -15,4 +15,5 @@ urlpatterns = [
     path('shop_list/', views.shop_list, name='shop_list'),
     path('shop_list/', views.shop_list, name='shop_list'),
     path('shop_list_delete/<int:recipe_id>/', views.shop_list_delete, name='shop_list_delete'),
+    path('shop_list_download/', views.shop_list_download, name='shop_list_download'),
 ]

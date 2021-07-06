@@ -14,7 +14,7 @@
                 {% include 'base/shop_list_card.html' %}
             {% endfor %}
         </ul>
-        <a href="#"><button class="button button_style_blue">Скачать список</button></a>    
+        <a href="{% url 'shop_list_download' %}"><button class="button button_style_blue">Скачать список</button></a>    
 </main>
 {% endblock %}
 

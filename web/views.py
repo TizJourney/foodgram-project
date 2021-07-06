@@ -297,3 +297,9 @@ def shop_list_delete(request, recipe_id):
         Purchases, user=request.user, recipe__pk=recipe_id)
     obj.delete()
     return redirect('shop_list')
+
+@login_required
+def shop_list_download(request):
+    query = Recipe.objects.filter(purchase_by_users__user=request.user)
+    
+    return redirect('shop_list')
