@@ -4,6 +4,7 @@ from django.db import models
 
 User = get_user_model()
 
+
 class Ingredient(models.Model):
     name = models.CharField(max_length=200)
     units = models.CharField(
@@ -17,7 +18,7 @@ class Ingredient(models.Model):
         verbose_name_plural = 'Ингридиенты'
 
     def __str__(self):
-        return self.name    
+        return self.name
 
 
 class Recipe(models.Model):
@@ -132,7 +133,6 @@ class Subscriber(models.Model):
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
 
-
     def __str__(self):
         subscriber = self.subscriber
         author = self.author
@@ -160,7 +160,6 @@ class Favorite(models.Model):
         verbose_name = 'Избранное'
         verbose_name_plural = 'Избранные'
 
-
     def __str__(self):
         user = self.user
         recipe = self.recipe
@@ -187,7 +186,6 @@ class Purchases(models.Model):
         unique_together = ('user', 'recipe')
         verbose_name = 'Покупка'
         verbose_name_plural = 'Покупки'
-
 
     def __str__(self):
         user = self.user

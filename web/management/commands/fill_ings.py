@@ -1,6 +1,6 @@
 import json
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from web.models import Ingredient
 
@@ -16,8 +16,8 @@ class Command(BaseCommand):
         with open(options['data'], 'rt') as ings_file:
             data = json.load(ings_file)
             items = [
-                Ingredient(title=item['name'],dimension=item['units']) 
+                Ingredient(title=item['name'], dimension=item['units'])
                 for item in data
-                ]
+            ]
             Ingredient.objects.bulk_create(items)
         print(Ingredient.objects.all())

@@ -1,8 +1,9 @@
+# flake8: noqa
 from .settings_common import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = [ '*' ]
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {

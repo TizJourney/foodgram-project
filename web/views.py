@@ -51,8 +51,12 @@ def _prepare_recipe_content(post_query, request):
         shopListQuery = Q(purchase_by_users__user=user)
         extended_query = (
             extended_query
-            .annotate(isFavoried=Count('favorite_by_users', filter=favoriedQuery))
-            .annotate(isInShopList=Count('purchase_by_users', filter=shopListQuery))
+            .annotate(isFavoried=Count(
+                'favorite_by_users', filter=favoriedQuery)
+            )
+            .annotate(isInShopList=Count(
+                'purchase_by_users', filter=shopListQuery)
+            )
         )
 
     paginator = Paginator(extended_query, RECIPE_PER_PAGE)
@@ -72,8 +76,6 @@ def _message_response(title='', message=''):
 
 
 def index(request):
-    page_number = request.GET.get('page')
-
     recipe_query = (
         Recipe.objects
         .all()
@@ -151,8 +153,8 @@ def recipe_view(request, recipe_id):
             subscriber=request.user).exists()
     )
     isInShopList = (
-        request.user.is_authenticated and 
-        recipe.purchase_by_users.filter(user=request.user).exists()
+        request.user.is_authenticated
+        and recipe.purchase_by_users.filter(user=request.user).exists()
     )
 
     context = {
