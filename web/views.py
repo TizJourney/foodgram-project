@@ -139,11 +139,11 @@ def favorite(request):
 
 def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    isFavoried = request.user and recipe.favorite_by_users.filter(
+    isFavoried = request.user.is_authenticated and recipe.favorite_by_users.filter(
         user=request.user).exists()
-    isSubscribed = request.user and recipe.author.subscribed_by_user.filter(
+    isSubscribed = request.user.is_authenticated and recipe.author.subscribed_by_user.filter(
         subscriber=request.user).exists()
-    isInShopList = request.user and recipe.purchase_by_users.filter(
+    isInShopList = request.user.is_authenticated and recipe.purchase_by_users.filter(
         user=request.user).exists()
 
     context = {
