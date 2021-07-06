@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 
 from collections import defaultdict
@@ -238,7 +238,11 @@ def new_recipe(request):
             ingredients = _get_ingredients(request)
             if ingredients:
                 _save_recipe(form, request.user, ingredients)
-                return redirect('index')
+                title = 'Рецепт успешно создан'
+                message = ''
+                base_url = reverse('message')
+                url = f'{base_url}?title={title}&message={message}'
+                return redirect(url)
             form.add_error(None, 'В форме должны быть ингриденты')
 
         return render(
@@ -282,7 +286,11 @@ def delete_recipe(request, recipe_id):
     if not request.user.is_superuser and request.user != recipe.author:
         raise PermissionDenied()
     recipe.delete()
-    return redirect('index')
+    title = 'Рецепт успешно удалён'
+    message = ''
+    base_url = reverse('message')
+    url = f'{base_url}?title={title}&message={message}'
+    return redirect(url)
 
 
 @login_required
@@ -329,6 +337,16 @@ def shop_list_download(request):
     response = HttpResponse(content, content_type='text/plain; charset=utf8')
     response['Content-Disposition'] = 'attachment; filename=shop_list.txt'
     return response
+
+
+def message(request):
+    message = request.GET.get('message')
+    title = request.GET.get('title')
+    return render(request, 'base/message.html', {
+        'title': title,
+        'message': message
+        },
+    )
 
 def page_not_found(request, exception):
     return render(request, 'base/message.html', {
