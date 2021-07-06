@@ -14,7 +14,7 @@
             {% include 'base/form.html' %}
             <div class="form__footer">
                 <button class="button button_style_blue">Войти</button>
-                <a class="form__forgot-link">Забыли пароль?</a>
+                <a href="{% url 'reset_password' %}" class="form__forgot-link">Забыли пароль?</a>
             </div>
         </form>
     </div>
