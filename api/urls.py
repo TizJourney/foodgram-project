@@ -2,6 +2,14 @@ from django.urls import path
 
 from . import views
 
+"""
+Это api для работы JavaScript'а сайта для интерактивных изменений сайта.
+Смотри
+web/static/api/Api.js 
+чтобы найти код, который делает запросы сюда
+"""
+
+
 urlpatterns = [
     path(
         'favorites/',

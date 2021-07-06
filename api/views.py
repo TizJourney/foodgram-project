@@ -11,8 +11,10 @@ from rest_framework.renderers import JSONRenderer
 
 from web.models import Favorite, Ingredient, Purchases, Recipe, Subscriber
 
-from .serializers import (FavoriteSerializer, IngredientSerializer,
-                          PurchasesSerializer, SubscriberSerializer)
+from .serializers import (
+    FavoriteSerializer, IngredientSerializer,
+    PurchasesSerializer, SubscriberSerializer
+)
 
 User = get_user_model()
 
@@ -40,6 +42,10 @@ class FavoritesView(View):
 
 @login_required
 def favorite_delete(request, recipe_id):
+    """
+    Удаление из избранного для пользователя
+    """
+
     obj = get_object_or_404(Favorite, user=request.user, recipe__pk=recipe_id)
     obj.delete()
     return JsonResponse(
@@ -70,6 +76,10 @@ class SubscriptionsView(View):
 
 @login_required
 def subscriptions_delete(request, author_id):
+    """
+    Удаление подписок пользователя
+    """
+
     obj = get_object_or_404(
         Subscriber, subscriber=request.user, author__pk=author_id)
     obj.delete()

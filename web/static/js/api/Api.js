@@ -1,3 +1,7 @@
+
+// Это api для интерактивной функционольности сайта
+// смотрим приложение api, чтобы узнать идёт обработка запросов на backend'е
+
 class Api {
   constructor(apiUrl) {
     this.apiUrl = apiUrl;

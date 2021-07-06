@@ -1,3 +1,10 @@
+"""
+Здесь находится скрипт для начальной загрузки базы ингридентов из файла
+Смотри скрипт
+fill_ingridients.sh
+для запуска этого скрипта
+"""
+
 import json
 
 from django.core.management.base import BaseCommand
