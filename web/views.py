@@ -82,6 +82,7 @@ def index(request):
         request
     )
     context['title'] = 'Рецепты'
+    context['nav_page'] = 'index'
 
     return render(
         request,
@@ -103,6 +104,7 @@ def recipes_by_author(request, author_id):
         request
     )
     context['title'] = f'{author}'
+    context['nav_page'] = 'author'
 
     return render(
         request,
@@ -126,6 +128,7 @@ def favorite(request):
     )
 
     context['title'] = 'Избранное'
+    context['nav_page'] = 'favorite'
 
     return render(
         request,
@@ -148,6 +151,7 @@ def recipe_view(request, recipe_id):
         'isFavoried': isFavoried,
         'isSubscribed': isSubscribed,
         'isInShopList': isInShopList,
+        'nav_page': 'single',
     }
     return render(request, 'recipes/singlePage.html', context)
 
@@ -219,11 +223,11 @@ def edit_recipe(request, recipe_id):
         return render(
             request,
             'recipes/editRecipe.html',
-            {'form': form, 'new': False}
+            {'form': form, 'new': False, 'nav_page': 'edit_recipe'}
         )
 
     form = RecipeForm(instance=recipe)
-    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': False})
+    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': False, 'nav_page': 'edit_recipe'})
 
 
 @login_required
@@ -240,11 +244,11 @@ def new_recipe(request):
         return render(
             request,
             'recipes/editRecipe.html',
-            {'form': form, 'new': True}
+            {'form': form, 'new': True, 'nav_page': 'new_recipe'}
         )
 
     form = RecipeForm()
-    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': True})
+    return render(request, 'recipes/editRecipe.html', {'form': form, 'new': True, 'nav_page': 'new_recipe'})
 
 
 @login_required
@@ -262,6 +266,7 @@ def follow_view(request):
     context = {
         'page': page,
         'paginator': paginator,
+        'nav_page': 'follow',
     }
 
     return render(
@@ -286,6 +291,7 @@ def shop_list(request):
 
     context = {
         'shop_list': query,
+        'nav_page': 'shop_list',
     }
 
     return render(
