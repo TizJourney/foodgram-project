@@ -1,14 +1,11 @@
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.views import (PasswordResetCompleteView,
+                                       PasswordResetConfirmView,
+                                       PasswordResetDoneView,
+                                       PasswordResetView)
 from django.urls import path
 
 from . import views
-
-from django.contrib.auth.views import (
-    PasswordResetDoneView,
-    PasswordResetConfirmView,
-    PasswordResetCompleteView,
-    PasswordResetView
-)
-from django.contrib.auth.forms import PasswordResetForm
 
 urlpatterns = [
     path('register/', views.Register.as_view(), name='register'),

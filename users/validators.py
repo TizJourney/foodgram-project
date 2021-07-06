@@ -1,5 +1,6 @@
 from django.contrib.auth import password_validation
 
+
 class UserAttributeSimilarityValidator(
     password_validation.UserAttributeSimilarityValidator
     ):
