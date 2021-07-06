@@ -320,7 +320,7 @@ def shop_list_download(request):
             shop_list_data[ing.ingredient] += ing.value
     content = '\n'.join(
         [
-            f'{ing.name}: {value} {ing.units}'
+            f'* {ing.name} ({ing.units}) - {value} '
             for ing, value in shop_list_data.items()
         ]
     )
