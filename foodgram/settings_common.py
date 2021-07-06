@@ -39,6 +39,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'foodgram.urls'
 
 import mimetypes
+
 mimetypes.add_type("text/css", ".css", True)
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
