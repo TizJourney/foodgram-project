@@ -1,8 +1,6 @@
 from web.models import Favorite, Recipe, Subscriber, Ingredient, Purchases
 from django.shortcuts import render
 
-from smtplib import SMTPException
-
 from django.shortcuts import get_object_or_404
 from rest_framework import response, status
 from django.contrib.auth.decorators import login_required
@@ -32,21 +30,27 @@ class FavoritesView(View):
     """
 
     def get(self, request):
-        return response.Response(request.user.favorite_recipes.all(), status=status.HTTP_200_OK)
+        return response.Response(
+            request.user.favorite_recipes.all(), status=status.HTTP_200_OK
+        )
 
     def post(self, request):
         json_data = json.loads(request.body)
         recipe = get_object_or_404(Recipe, pk=json_data.get('id'))
-        obj, created = Favorite.objects.get_or_create(
+        obj, _ = Favorite.objects.get_or_create(
             user=request.user, recipe=recipe)
-        return JsonResponse(FavoriteSerializer(obj).data, status=status.HTTP_200_OK)
+        return JsonResponse(
+            FavoriteSerializer(obj).data, status=status.HTTP_200_OK
+        )
 
 
 @login_required
 def favorite_delete(request, recipe_id):
     obj = get_object_or_404(Favorite, user=request.user, recipe__pk=recipe_id)
     obj.delete()
-    return JsonResponse(FavoriteSerializer(obj).data, status=status.HTTP_200_OK)
+    return JsonResponse(
+        FavoriteSerializer(obj).data, status=status.HTTP_200_OK
+    )
 
 
 @renderer_classes((JSONRenderer,))
@@ -56,14 +60,18 @@ class SubscriptionsView(View):
     """
 
     def get(self, request):
-        return response.Response(request.user.subscribing.all(), status=status.HTTP_200_OK)
+        return response.Response(
+            request.user.subscribing.all(), status=status.HTTP_200_OK
+        )
 
     def post(self, request):
         json_data = json.loads(request.body)
         author = get_object_or_404(User, pk=json_data.get('id'))
-        obj, created = Subscriber.objects.get_or_create(
+        obj, _ = Subscriber.objects.get_or_create(
             subscriber=request.user, author=author)
-        return JsonResponse(SubscriberSerializer(obj).data, status=status.HTTP_200_OK)
+        return JsonResponse(
+            SubscriberSerializer(obj).data, status=status.HTTP_200_OK
+        )
 
 
 @login_required
@@ -71,7 +79,9 @@ def subscriptions_delete(request, author_id):
     obj = get_object_or_404(
         Subscriber, subscriber=request.user, author__pk=author_id)
     obj.delete()
-    return JsonResponse(SubscriberSerializer(obj).data, status=status.HTTP_200_OK)
+    return JsonResponse(
+        SubscriberSerializer(obj).data, status=status.HTTP_200_OK
+    )
 
 
 @renderer_classes((JSONRenderer,))
@@ -81,14 +91,18 @@ class PurchasesView(View):
     """
 
     def get(self, request):
-        return response.Response(request.user.recipe_purchases.all(), status=status.HTTP_200_OK)
+        return response.Response(
+            request.user.recipe_purchases.all(), status=status.HTTP_200_OK
+        )
 
     def post(self, request):
         json_data = json.loads(request.body)
         recipe = get_object_or_404(Recipe, pk=json_data.get('id'))
-        obj, created = Purchases.objects.get_or_create(
+        obj, _ = Purchases.objects.get_or_create(
             user=request.user, recipe=recipe)
-        return JsonResponse(PurchasesSerializer(obj).data, status=status.HTTP_200_OK)
+        return JsonResponse(
+            PurchasesSerializer(obj).data, status=status.HTTP_200_OK
+        )
 
 
 @login_required
@@ -96,7 +110,9 @@ def purchases_delete(request, recipe_id):
     obj = get_object_or_404(
         Purchases, user=request.user, recipe__pk=recipe_id)
     obj.delete()
-    return JsonResponse(PurchasesSerializer(obj).data, status=status.HTTP_200_OK)
+    return JsonResponse(
+        PurchasesSerializer(obj).data, status=status.HTTP_200_OK
+    )
 
 
 class Ingredients(generics.ListAPIView):
