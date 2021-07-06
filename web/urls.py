@@ -1,3 +1,7 @@
+"""
+Здесь находится код для рендернига основной части сайта.
+"""
+
 from django.urls import path
 
 from . import views

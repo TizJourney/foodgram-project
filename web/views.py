@@ -24,6 +24,10 @@ User = get_user_model()
 
 
 def _prepare_recipe_content(post_query, request):
+    """
+    Общая функция по созданию контента для отрисовки карточек рецептов.
+    Используется на основной странице, избранном, рецепте одного автора и т.п.
+    """      
 
     page_number = request.GET.get('page')
 
@@ -69,6 +73,9 @@ def _prepare_recipe_content(post_query, request):
 
 
 def _message_response(title='', message=''):
+    """
+    Общая функция по созданию сообщения для пользователя
+    """      
     message = ''
     base_url = reverse('message')
     url = f'{base_url}?title={title}&message={message}'
@@ -76,6 +83,9 @@ def _message_response(title='', message=''):
 
 
 def index(request):
+    """
+    Основная страница рецептов. Доступна всем пользователям.
+    """      
     recipe_query = (
         Recipe.objects
         .all()
@@ -96,6 +106,10 @@ def index(request):
 
 
 def recipes_by_author(request, author_id):
+    """
+    Отрисовка списка рецептов конкртного автора
+    """        
+
     author = get_object_or_404(User, id=author_id)
 
     recipe_query = (
@@ -119,6 +133,10 @@ def recipes_by_author(request, author_id):
 
 @login_required
 def favorite(request):
+    """
+    Отрисовка списка любимых рецептов
+    """        
+
     recipe_query = (
         Recipe
         .objects
@@ -142,6 +160,10 @@ def favorite(request):
 
 
 def recipe_view(request, recipe_id):
+    """
+    Отрисовка детальной информации о одном рецепте
+    """        
+
     recipe = get_object_or_404(Recipe, id=recipe_id)
     isFavoried = (
         request.user.is_authenticated
@@ -168,6 +190,11 @@ def recipe_view(request, recipe_id):
 
 
 def _get_ingredients(request):
+    """
+    Функция для разбора набора инридиентов из формы,
+    которая посылается в сайта
+    Пример входного ключа: nameIngredient_1
+    """        
     ingridient_names = {}
     ingridient_values = {}
     ingridient_units = {}
@@ -197,6 +224,11 @@ def _get_ingredients(request):
 
 
 def _save_recipe(form, author, ingredients, recipe=None):
+    """
+    Функция сохрания рецепта в базу данных
+    Создаются дополнительно записи для ингридиентов
+    """    
+
     recipe_from_form = form.save(commit=False)
     if recipe is None:
         recipe_from_form.author = author
@@ -217,6 +249,9 @@ def _save_recipe(form, author, ingredients, recipe=None):
 
 @login_required
 def edit_recipe(request, recipe_id):
+    """
+    Функциональность редактирования существующего рецепта
+    """    
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     if not request.user.is_superuser and request.user != recipe.author:
         raise PermissionDenied()
@@ -248,6 +283,10 @@ def edit_recipe(request, recipe_id):
 
 @login_required
 def new_recipe(request):
+    """
+    Функциональность создания нового рецепта
+    """
+
     if request.method == 'POST':
         form = RecipeForm(request.POST, files=request.FILES or None)
         if form.is_valid():
@@ -273,6 +312,11 @@ def new_recipe(request):
 
 @login_required
 def follow_view(request):
+    """
+    Отрисовка страницы подписок на других пользователей
+    для текущего пользователя
+    """
+
     page_number = request.GET.get('page')
 
     follow_query = (
@@ -298,6 +342,10 @@ def follow_view(request):
 
 @login_required
 def delete_recipe(request, recipe_id):
+    """
+    Удаление рецепта пользователя
+    """
+
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     if not request.user.is_superuser and request.user != recipe.author:
         raise PermissionDenied()
@@ -307,6 +355,10 @@ def delete_recipe(request, recipe_id):
 
 @login_required
 def shop_list(request):
+    """
+    Отрисовка списка покупок пользователя
+    """
+
     query = Recipe.objects.filter(purchase_by_users__user=request.user)
 
     context = {
@@ -323,6 +375,10 @@ def shop_list(request):
 
 @login_required
 def shop_list_delete(request, recipe_id):
+    """
+    Удаление элемента из списка покупок
+    """
+
     obj = get_object_or_404(
         Purchases, user=request.user, recipe__pk=recipe_id)
     obj.delete()
@@ -331,6 +387,9 @@ def shop_list_delete(request, recipe_id):
 
 @login_required
 def shop_list_download(request):
+    """
+    Функциональность создания и посылки пользователю файла со списком покупок
+    """
     query_list = list(
         Recipe.objects
         .filter(purchase_by_users__user=request.user)
@@ -353,6 +412,11 @@ def shop_list_download(request):
 
 
 def message(request):
+    """
+    Вывод сообщений пользователю об успехе таких операций,
+    создание и редактирование рецепта
+    """
+
     message = request.GET.get('message')
     title = request.GET.get('title')
     return render(request, 'base/message.html', {
@@ -363,6 +427,10 @@ def message(request):
 
 
 def page_not_found(request, exception):
+    """
+    Обработка ошибок 404. Работает только при DEBUG = False
+    """
+
     return render(request, 'base/message.html', {
         'title': 'Ошибка 404',
         'message': 'Страница не найдена'
@@ -371,6 +439,9 @@ def page_not_found(request, exception):
 
 
 def server_error(request):
+    """
+    Обработка ошибок 500. Работает только при DEBUG = False
+    """
     return render(request, 'base/message.html', {
         'title': 'Ошибка 500',
         'message': 'Ошибка сервера'
