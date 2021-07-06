@@ -68,6 +68,12 @@ def _prepare_recipe_content(post_query, request):
         'filter': filter_context
     }
 
+def _message_response(title='', message=''):
+    message = ''
+    base_url = reverse('message')
+    url = f'{base_url}?title={title}&message={message}'
+    return redirect(url)    
+
 
 def index(request):
     page_number = request.GET.get('page')
@@ -217,7 +223,7 @@ def edit_recipe(request, recipe_id):
             ingredients = _get_ingredients(request)
             if ingredients:
                 _save_recipe(form, request.user, ingredients, recipe)
-                return redirect('index')
+                return _message_response(title = 'Рецепт успешно изменён')
             form.add_error(None, 'В форме должны быть ингридиенты')
 
         return render(
@@ -230,6 +236,8 @@ def edit_recipe(request, recipe_id):
     return render(request, 'recipes/editRecipe.html', {'form': form, 'new': False, 'nav_page': 'edit_recipe'})
 
 
+
+
 @login_required
 def new_recipe(request):
     if request.method == 'POST':
@@ -238,11 +246,7 @@ def new_recipe(request):
             ingredients = _get_ingredients(request)
             if ingredients:
                 _save_recipe(form, request.user, ingredients)
-                title = 'Рецепт успешно создан'
-                message = ''
-                base_url = reverse('message')
-                url = f'{base_url}?title={title}&message={message}'
-                return redirect(url)
+                return _message_response(title = 'Рецепт успешно создан')
             form.add_error(None, 'В форме должны быть ингриденты')
 
         return render(
@@ -286,11 +290,7 @@ def delete_recipe(request, recipe_id):
     if not request.user.is_superuser and request.user != recipe.author:
         raise PermissionDenied()
     recipe.delete()
-    title = 'Рецепт успешно удалён'
-    message = ''
-    base_url = reverse('message')
-    url = f'{base_url}?title={title}&message={message}'
-    return redirect(url)
+    return _message_response(title = 'Рецепт успешно удалён')
 
 
 @login_required
