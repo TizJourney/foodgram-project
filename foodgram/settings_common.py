@@ -9,6 +9,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
+LANGUAGE_CODE = 'ru'
 
 # Application definition
 
@@ -62,21 +63,18 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'users.validators.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'users.validators.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'users.validators.NumericPasswordValidator',
     },
 ]
-
-
-LANGUAGE_CODE = "ru"
 
 TIME_ZONE = 'UTC'
 
