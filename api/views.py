@@ -3,27 +3,24 @@ from django.shortcuts import render
 
 from smtplib import SMTPException
 
-from django.core.mail import send_mail
-from django.db.models import Avg
 from django.shortcuts import get_object_or_404
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import (decorators, filters, mixins, permissions, response,
-                            status, viewsets)
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.viewsets import GenericViewSet
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import response, status
 from django.contrib.auth.decorators import login_required
 
 from django.views import View
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import renderer_classes
 from django.http import JsonResponse
 import json
 
-from .serializers import FavoriteSerializer, SubscriberSerializer, IngredientSerializer, PurchasesSerializer
-from django.views.generic.list import ListView
+from .serializers import (
+    FavoriteSerializer,
+    SubscriberSerializer,
+    IngredientSerializer,
+    PurchasesSerializer
+)
 from rest_framework.renderers import JSONRenderer
 from django.contrib.auth import get_user_model
-from rest_framework import filters, viewsets, generics
+from rest_framework import generics
 
 User = get_user_model()
 
@@ -104,8 +101,8 @@ def purchases_delete(request, recipe_id):
 
 class Ingredients(generics.ListAPIView):
     serializer_class = IngredientSerializer
-    MAX_LIMIT = 10 
-    
+    MAX_LIMIT = 10
+
     def get_queryset(self):
         query = self.request.GET.get('query').lower()
         return (

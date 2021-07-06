@@ -2,8 +2,12 @@ from django.urls import path
 
 from . import views
 
-from django.contrib.auth.views import PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, PasswordResetView
-from django.contrib.auth.forms import PasswordChangeForm, AuthenticationForm, PasswordResetForm
+from django.contrib.auth.views import (PasswordResetDoneView,
+                                       PasswordResetConfirmView,
+                                       PasswordResetCompleteView,
+                                       PasswordResetView
+                                       )
+from django.contrib.auth.forms import PasswordResetForm
 
 urlpatterns = [
     path('register/', views.Register.as_view(), name='register'),
@@ -13,7 +17,7 @@ urlpatterns = [
     path('reset/', views.ResetPassword.as_view(), name='reset_password'),
     path(
         'password_reset/', PasswordResetView.as_view(
-            form_class = PasswordResetForm,
+            form_class=PasswordResetForm,
             template_name='users/changePassword.html',
             subject_template_name='commons/password_reset_subject.txt',
             email_template_name='commons/password_reset_email.html',
@@ -30,7 +34,7 @@ urlpatterns = [
         'reset/<uidb64>/<token>/',
         PasswordResetConfirmView.as_view(
             template_name='users/PasswordResetConfirm.html',
-            ), name="password_reset_confirm"
+        ), name="password_reset_confirm"
     ),
 
     path(
