@@ -3,8 +3,8 @@ from django.views.generic import CreateView
 
 from .forms import RegisterForm
 
-from django.contrib.auth.views import LogoutView, PasswordChangeView, LoginView
-from django.contrib.auth.forms import PasswordChangeForm, AuthenticationForm
+from django.contrib.auth.views import LogoutView, PasswordChangeView, LoginView, PasswordResetView
+from django.contrib.auth.forms import PasswordChangeForm, AuthenticationForm, PasswordResetForm
 
 
 class Register(CreateView):
@@ -27,7 +27,7 @@ class ChangePassword(PasswordChangeView):
     template_name = 'users/changePassword.html'
 
 
-class ResetPassword(CreateView):
-    form_class = RegisterForm
+class ResetPassword(PasswordResetView):
+    form_class = PasswordResetForm
     success_url = reverse_lazy('index')
     template_name = 'users/resetPassword.html'
