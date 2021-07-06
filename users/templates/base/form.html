@@ -9,4 +9,9 @@
     </div>
 </div>
 {% endfor %}
+<div class="form__field-group">
+    {% for error in form.non_field_errors %}
+    <span class="form__error">{{ error }}</span>
+    {% endfor %}
+</div>
 
