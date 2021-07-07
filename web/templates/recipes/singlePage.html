@@ -14,7 +14,7 @@
                 <h1 class="single-card__title">{{recipe.name}}</h1>
                 {% if user.is_authenticated %}
                 <div class="single-card__favorite">
-                    {% if isFavoried %}
+                    {% if is_favoried %}
                     <button class="button button_style_none" name="favorites"><span
                             class="icon-favorite icon-favorite_big icon-favorite_active"></span></button>
                     <div class="single-card__favorite-tooltip tooltip">Убрать из избранного</div>
@@ -53,14 +53,14 @@
             </div>
             {% if user.is_authenticated %}
             <ul class="single-card__items">
-                {% if isInShopList %}
+                {% if is_in_shop_list %}
                 <li class="single-card__item"><button class="button button_style_blue button_style_light-blue-outline" name="purchases">
                     <span class="icon-check button__icon"></span> Рецепт добавлен</button></li>
                 {% else %}
                     <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span
                         class="icon-plus"></span> Добавить в покупки</button></li>
                 {% endif %}
-                {% if isSubscribed %}
+                {% if is_subscribed %}
                 <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe"
                     name="subscribe">Отписаться от автора</button></li>
                 {% else %}

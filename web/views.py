@@ -55,10 +55,10 @@ def _prepare_recipe_content(post_query, request):
         shopListQuery = Q(purchase_by_users__user=user)
         extended_query = (
             extended_query
-            .annotate(isFavoried=Count(
+            .annotate(is_favoried=Count(
                 'favorite_by_users', filter=favoriedQuery)
             )
-            .annotate(isInShopList=Count(
+            .annotate(is_in_shop_list=Count(
                 'purchase_by_users', filter=shopListQuery)
             )
         )
@@ -165,25 +165,25 @@ def recipe_view(request, recipe_id):
     """        
 
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    isFavoried = (
+    is_favoried = (
         request.user.is_authenticated
         and recipe.favorite_by_users.filter(user=request.user).exists()
     )
-    isSubscribed = (
+    is_subscribed = (
         request.user.is_authenticated
         and recipe.author.subscribed_by_user.filter(
             subscriber=request.user).exists()
     )
-    isInShopList = (
+    is_in_shop_list = (
         request.user.is_authenticated
         and recipe.purchase_by_users.filter(user=request.user).exists()
     )
 
     context = {
         'recipe': recipe,
-        'isFavoried': isFavoried,
-        'isSubscribed': isSubscribed,
-        'isInShopList': isInShopList,
+        'is_favoried': is_favoried,
+        'is_subscribed': is_subscribed,
+        'is_in_shop_list': is_in_shop_list,
         'nav_page': 'single',
     }
     return render(request, 'recipes/singlePage.html', context)
