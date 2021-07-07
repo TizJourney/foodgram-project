@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
@@ -9,8 +9,7 @@ web/static/api/Api.js
 чтобы найти код, который делает запросы сюда
 """
 
-
-urlpatterns = [
+v1_url_patterns = [
     path(
         'favorites/',
         views.FavoritesView.as_view(),
@@ -34,4 +33,8 @@ urlpatterns = [
         'purchases/<int:recipe_id>/',
         views.purchases_delete, name='purchases_delete'),
     path('ingredients/', views.Ingredients.as_view(), name='ingredients'),
+]
+
+urlpatterns = [
+    path('v1/', include(v1_url_patterns)),
 ]
