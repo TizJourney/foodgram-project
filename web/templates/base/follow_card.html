@@ -1,7 +1,7 @@
 <div class="card-list">
-    <div class="card-user" data-author="{{follow.author.pk}}">
+    <div class="card-user" data-author="{{ follow.author.pk }}">
         <div class="card-user__header">
-            <h2 class="card-user__title">{{follow.author}}</h2>
+            <h2 class="card-user__title">{{ follow.author }}</h2>
         </div>
         <div class="card-user__body">
             <ul class="card-user__items">
@@ -9,7 +9,7 @@
                     <li class="card-user__item">
                         <a class="recipe link" href="{% url 'recipe' recipe_id=recipe.pk %}" target="_blank">
                             {% if recipe.image %}
-                            <img src="{{recipe.image.url}}" alt="{{ recipe.name }}" class="recipe__image">
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="recipe__image">
                             {% endif %}
                             <h3 class="recipe__title">{{ recipe.name }}</h3>
                             <p class="recipe__text"><span class="icon-time"></span> {{ recipe.time }} мин.</p>

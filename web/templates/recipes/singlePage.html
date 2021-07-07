@@ -1,17 +1,17 @@
 {% extends "base/base.html" %}
 {% load static %}
-{% block title %}{{recipe.name}}{% endblock %}
+{% block title %}{{ recipe.name }}{% endblock %}
 {% block css %} {% static 'pages/single.css' %}{% endblock %}
 
 {% block content %}
 <main class="main container">
-    <div class="single-card" data-id="{{recipe.pk}}" data-author="{{recipe.author.pk}}">
+    <div class="single-card" data-id="{{ recipe.pk }}" data-author="{{ recipe.author.pk }}">
         {% if recipe.image %}
-        <img src="{{recipe.image.url}}" alt="{{recipe.name}}" class="single-card__image">
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="single-card__image">
         {% endif %}
         <div class="single-card__info">
             <div class="single-card__header-info">
-                <h1 class="single-card__title">{{recipe.name}}</h1>
+                <h1 class="single-card__title">{{ recipe.name }}</h1>
                 {% if user.is_authenticated %}
                 <div class="single-card__favorite">
                     {% if is_favoried %}
@@ -38,10 +38,10 @@
                 {% endif %}
             </ul>
             <div class="single-card__items single-card__items_column">
-                <p class="single-card__text"><span class="icon-time"></span>{{recipe.time}} мин.</p>
+                <p class="single-card__text"><span class="icon-time"></span>{{ recipe.time }} мин.</p>
                 <ul class="single-card__items">
                     <li class="single-card__item">
-                        <p class="single-card__text"><span class="icon-user"></span>{{recipe.author}}</p>
+                        <p class="single-card__text"><span class="icon-user"></span>{{ recipe.author }}</p>
                     </li>
                     {% if user.is_authenticated %}
                     {% if user.is_superuser or user == recipe.author %}
@@ -79,7 +79,7 @@
             </div>
             <div class="single-card__section">
                 <h3 class="single-card__section-title">Описание:</h3>
-                <p class=" single-card__section-text">{{recipe.description}}</p>
+                <p class=" single-card__section-text">{{ recipe.description }}</p>
             </div>
         </div>
     </div>

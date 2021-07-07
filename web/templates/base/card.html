@@ -1,6 +1,6 @@
-<div class="card" data-id="{{card.pk}}">
+<div class="card" data-id="{{ card.pk }}">
     {% if card.image %}
-        <a href="{% url 'recipe' recipe_id=card.pk %}" class="link" target="_blank"><img src="{{card.image.url}}" alt="{{card.name}}" class="card__image"></a>    
+        <a href="{% url 'recipe' recipe_id=card.pk %}" class="link" target="_blank"><img src="{{ card.image.url }}" alt="{{ card.name }}" class="card__image"></a>    
     {% endif %}
     <div class="card__body">
         <a class="card__title link" href="{% url 'recipe' recipe_id=card.pk %}" target="_blank">{{ card.name }}</a>
@@ -16,8 +16,8 @@
             {% endif %}
         </ul>
         <div class="card__items card__items_column">
-            <p class="card__text"><span class="icon-time"></span> {{card.time }} мин.</p>
-            <p class="card__text"><span class="icon-user"></span> <a href="{% url 'recipes_by_author' author_id=card.author.pk %}" style="color: black">{{card.author}}</a>
+            <p class="card__text"><span class="icon-time"></span> {{ card.time }} мин.</p>
+            <p class="card__text"><span class="icon-user"></span> <a href="{% url 'recipes_by_author' author_id=card.author.pk %}" style="color: black">{{ card.author }}</a>
             </p>
         </div>
     </div>

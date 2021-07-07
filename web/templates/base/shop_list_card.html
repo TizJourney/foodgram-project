@@ -1,11 +1,11 @@
-<li class="shopping-list__item" data-id="{{recipe.pk}}">
+<li class="shopping-list__item" data-id="{{ recipe.pk }}">
     <div class="recipe recipe_reverse">
         {% if recipe.image %}
-        <img src="{{recipe.image.url}}" alt="{{recipe.name}}"
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}"
             class="recipe__image recipe__image_big">
         {% endif %}
-        <h3 class="recipe__title">{{recipe.name}}</h3>
-        <p class="recipe__text"><span class="icon-time"></span> {{recipe.time}} мин.</p>
+        <h3 class="recipe__title">{{ recipe.name }}</h3>
+        <p class="recipe__text"><span class="icon-time"></span> {{ recipe.time }} мин.</p>
     </div>
     <a href="{% url 'shop_list_delete' recipe_id=recipe.pk %}" class="shopping-list__button link">Удалить</a>
 </li>

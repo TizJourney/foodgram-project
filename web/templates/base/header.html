@@ -10,7 +10,7 @@
                 <li class="nav__item {% if nav_page == 'new_recipe' %}nav__item_active{% endif %}"><a href="{% url 'new_recipe' %}" class="nav__link link">Создать рецепт</a></li>
                 <li class="nav__item {% if nav_page == 'favorite' %}nav__item_active{% endif %}"><a href="{% url 'favorite' %}" class="nav__link link">Избранное</a></li>
                 <li class="nav__item {% if nav_page == 'shop_list' %}nav__item_active{% endif %}"><a href="{% url 'shop_list' %}" class="nav__link link">Список покупок</a> <span
-                        class="badge badge_style_blue nav__badge" id="counter">{{user|count_shop_items}}</span></li>
+                        class="badge badge_style_blue nav__badge" id="counter">{{ user|count_shop_items }}</span></li>
                 {% endif %}                        
             </ul>
             {% if user.is_authenticated %}

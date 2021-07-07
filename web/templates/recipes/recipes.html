@@ -10,17 +10,17 @@
         <ul class="tags">
             <li class="tags__item">
                 <a id="breakfast" class="tags__checkbox tags__checkbox_style_orange {% if filter.breakfast == '1' %}tags__checkbox_active{% endif %}"
-                    href="{{request.path}}?breakfast={% if filter.breakfast == '1' %}0{% else %}1{% endif %}&dinner={{filter.dinner}}&lunch={{filter.lunch}}"></a>
+                    href="{{ request.path }}?breakfast={% if filter.breakfast == '1' %}0{% else %}1{% endif %}&dinner={{ filter.dinner }}&lunch={{ filter.lunch }}"></a>
                 <span class="tags__label">Завтрак</span>
             </li>
             <li class="tags__item">
                 <a id="lunch" class="tags__checkbox tags__checkbox_style_green {% if filter.lunch == '1' %}tags__checkbox_active{% endif %}"
-                href="{{request.path}}?breakfast={{filter.breakfast}}&dinner={{filter.dinner}}&lunch={% if filter.lunch == '1' %}0{% else %}1{% endif %}"></a>
+                href="{{ request.path }}?breakfast={{ filter.breakfast }}&dinner={{ filter.dinner}}&lunch={% if filter.lunch == '1' %}0{% else %}1{% endif %}"></a>
                 <span for="lunch" class="tags__label">Обед</span>
             </li>
             <li class="tags__item">
                 <a id="dinner" class="tags__checkbox tags__checkbox_style_purple {% if filter.dinner == '1' %}tags__checkbox_active{% endif %}"
-                    href="{{request.path}}?breakfast={{filter.breakfast}}&dinner={% if filter.dinner == '1' %}0{% else %}1{% endif %}&lunch={{filter.lunch}}"></a>
+                    href="{{ request.path }}?breakfast={{ filter.breakfast }}&dinner={% if filter.dinner == '1' %}0{% else %}1{% endif %}&lunch={{ filter.lunch }}"></a>
                 <label for="dinner" class="tags__label">Ужин</label>
             </li>
         </ul>
