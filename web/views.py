@@ -275,7 +275,7 @@ def shop_list_download(request):
     )
     shop_list_data = defaultdict(int)
     for item in query_list:
-        for ing in item.ingredients.all():
+        for ing in item.ingredients_quantities.all():
             shop_list_data[ing.ingredient] += ing.value
     content = '\n'.join(
         [

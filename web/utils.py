@@ -119,7 +119,7 @@ def _save_recipe(form, author, ingredients, recipe=None):
         recipe_from_form.author = author
     recipe_from_form.save()
 
-    recipe_from_form.ingredients.all().delete()
+    recipe_from_form.ingredients_quantities.all().delete()
 
     for item in ingredients:
         ingredient = get_object_or_404(Ingredient, name=item['name'])

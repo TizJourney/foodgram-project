@@ -84,13 +84,13 @@ class IngredientQuanity(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='ingredients',
+        related_name='ingredients_quantities',
         verbose_name='ингридент',
     )
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
-        related_name='recipe',
+        related_name='ingredients_quantities',
         verbose_name='рецепт',
     )
     value = models.IntegerField(
