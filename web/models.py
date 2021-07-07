@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator
 from django.db import models
 
 User = get_user_model()
@@ -55,11 +54,8 @@ class Recipe(models.Model):
         help_text='Описание рецепта. Необязательно для заполнения',
     )
 
-    time = models.IntegerField(
+    time = models.PositiveIntegerField(
         'Время приготовления',
-        validators=(
-            MinValueValidator(0),
-        )
     )
 
     image = models.ImageField(
