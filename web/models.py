@@ -94,7 +94,12 @@ class IngredientQuanity(models.Model):
     )
 
     class Meta:
-        unique_together = ('recipe', 'ingredient')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['recipe', 'ingredient'],
+                name='unique__ingredient_quanity__recipe_ingredient'
+            )
+        ]
         verbose_name = 'Количество ингридиента'
         verbose_name_plural = 'Количества ингридиентов'
 
@@ -125,7 +130,12 @@ class Subscriber(models.Model):
     )
 
     class Meta:
-        unique_together = ('author', 'subscriber')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['author', 'subscriber'],
+                name='unique__subscriber__author_subscriber'
+            )
+        ]
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
 
@@ -152,7 +162,12 @@ class Favorite(models.Model):
     )
 
     class Meta:
-        unique_together = ('user', 'recipe')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'],
+                name='unique__favorite__user_recipe'
+            )
+        ]
         verbose_name = 'Избранное'
         verbose_name_plural = 'Избранные'
 
@@ -179,7 +194,12 @@ class Purchases(models.Model):
     )
 
     class Meta:
-        unique_together = ('user', 'recipe')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'],
+                name='unique__purchases__user_recipe'
+            )
+        ]
         verbose_name = 'Покупка'
         verbose_name_plural = 'Покупки'
 
