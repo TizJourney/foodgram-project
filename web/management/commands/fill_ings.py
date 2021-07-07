@@ -23,8 +23,9 @@ class Command(BaseCommand):
         with open(options['data'], 'rt') as ings_file:
             data = json.load(ings_file)
             items = [
-                Ingredient(title=item['name'], dimension=item['units'])
+                Ingredient(name=item['title'], units=item['dimension'])
                 for item in data
             ]
             Ingredient.objects.bulk_create(items)
-        print(Ingredient.objects.all())
+        total_count = Ingredient.objects.count()
+        print(f'Добавлено {total_count} объектов')
