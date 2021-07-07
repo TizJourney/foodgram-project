@@ -124,8 +124,12 @@ class Ingredients(generics.ListAPIView):
     MAX_LIMIT = 10
 
     def get_queryset(self):
-        query = self.request.GET.get('query').lower()
+        query = self.request.GET.get('query')
+
+        if not query:
+            return []
+        
         return (
             Ingredient.objects
-            .filter(name__istartswith=query)[:self.MAX_LIMIT]
+            .filter(name__istartswith=query.lower())[:self.MAX_LIMIT]
         )
