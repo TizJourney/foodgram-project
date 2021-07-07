@@ -1,1 +1,1 @@
-const apiUrl = "/api/";
+const apiUrl = "/api/v1/";
