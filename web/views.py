@@ -1,15 +1,14 @@
 from collections import defaultdict
 
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib import messages
 
 from .models import Purchases, Recipe
-
 from .utils import _prepare_recipe_content, _process_recipe_form
 
 FOLLOW_PER_PAGE = 6

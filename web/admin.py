@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 
-
 from .models import (Favorite, Ingredient, IngredientQuanity, Purchases,
-                     Recipe, Subscriber, RecipeTag)
+                     Recipe, RecipeTag, Subscriber)
+
 
 class RecipeAdmin(admin.ModelAdmin):
     list_display = (

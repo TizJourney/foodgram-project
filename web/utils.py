@@ -1,12 +1,10 @@
-from django.db.models import Count, Q
+from django.contrib import messages
 from django.core.paginator import Paginator
-from django.shortcuts import redirect
-
+from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Ingredient, IngredientQuanity, RecipeTag
 from .forms import RecipeForm
-from django.contrib import messages
+from .models import Ingredient, IngredientQuanity, RecipeTag
 
 RECIPE_PER_PAGE = 6
 FOLLOW_PER_PAGE = 6
