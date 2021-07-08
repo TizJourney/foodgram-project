@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 
 from django.shortcuts import get_object_or_404, redirect
 
-from .models import Ingredient, IngredientQuanity
+from .models import Ingredient, IngredientQuanity, RecipeTag
 
 RECIPE_PER_PAGE = 6
 FOLLOW_PER_PAGE = 6
@@ -26,21 +26,13 @@ def _prepare_recipe_content(post_query, request):
     user = request.user if request.user.is_authenticated else None
 
     filter_query = Q(pk__in=[])
-    filter_context = {
-        'breakfast': request.GET.get('breakfast', '1'),
-        'lunch': request.GET.get('lunch', '1'),
-        'dinner': request.GET.get('dinner', '1'),
-    }
-    #todo: fix
-    # if filter_context['breakfast'] != '0':
-    #     filter_query.add(Q(breakfast_tag=True), Q.OR)
 
-    # if filter_context['lunch'] != '0':
-    #     filter_query.add(Q(lunch_tag=True), Q.OR)
-
-    # if filter_context['dinner'] != '0':
-    #     filter_query.add(Q(dinner_tag=True), Q.OR)
-
+    filter_context = {}
+    for tag in RecipeTag.objects.all():
+        filter_context[tag] = request.GET.get(tag.slug, '1')
+        if filter_context[tag] == '1':
+            filter_query.add(Q(tags__slug=tag.slug), Q.OR)
+        
     extended_query = post_query.filter(filter_query)
 
     if user is not None:
