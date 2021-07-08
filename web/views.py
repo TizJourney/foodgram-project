@@ -259,3 +259,23 @@ def shop_list_download(request):
     return response
 
 
+def about(request):
+    """
+    Страница об авторе проекта
+    """
+
+    return render(
+        request,
+        'about/about.html',
+    )
+
+def technology(request):
+    """
+    Страница об технологиях в проекте
+    """
+
+    return render(
+        request,
+        'about/technology.html',
+        { 'nav_page': 'technology' }
+    )    
