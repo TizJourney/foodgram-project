@@ -19,6 +19,7 @@
 * Создать базу данных: `python manage.py makemigrations` и `python manage.py migrate`
 * Создать супер пользователя: `python manage.py createsuperuser`
 * Запустить `fill_ingridients.sh` для загрузки в базу данных начального набора ингридиентов
+* Создать наборы фильтров при помощи команды `python manage.py init_tags`
 * Использовать скрипт для запуска локальной версии `run_local.sh`
 
 ### Локальная версия
