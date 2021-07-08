@@ -11,10 +11,8 @@ from rest_framework.renderers import JSONRenderer
 
 from web.models import Favorite, Ingredient, Purchases, Recipe, Subscriber
 
-from .serializers import (
-    FavoriteSerializer, IngredientSerializer,
-    PurchasesSerializer, SubscriberSerializer
-)
+from .serializers import (FavoriteSerializer, IngredientSerializer,
+                          PurchasesSerializer, SubscriberSerializer)
 
 User = get_user_model()
 
