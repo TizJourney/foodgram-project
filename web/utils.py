@@ -115,9 +115,13 @@ def _save_recipe(form, author, ingredients, recipe=None):
 
 
 def _process_recipe_form(request, message, instance, nav_page, new):
-    form = RecipeForm(request.POST or None, files=request.FILES or None)
-    if instance is not None:
-        form.instance = instance
+    form = RecipeForm(
+        request.POST or None,
+        files=request.FILES or None,
+        instance=instance or None
+        )
+    # if instance is not None:
+    #     form.instance = instance
 
     if form.is_valid():
         ingredients = _get_ingredients(request)
