@@ -4,11 +4,11 @@ from .models import Recipe, RecipeTag
 
 
 class RecipeForm(forms.ModelForm):
-    tags= forms.ModelMultipleChoiceField(
+    tags = forms.ModelMultipleChoiceField(
         queryset=RecipeTag.objects.all(),
         to_field_name='slug'
     )
-    ingredients = forms.CharField(required=False)    
+    ingredients = forms.CharField(required=False)
 
     class Meta:
         model = Recipe

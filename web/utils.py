@@ -18,7 +18,7 @@ def _prepare_recipe_content(post_query, request):
     """
     Общая функция по созданию контента для отрисовки карточек рецептов.
     Используется на основной странице, избранном, рецепте одного автора и т.п.
-    """      
+    """
 
     page_number = request.GET.get('page')
 
@@ -31,7 +31,7 @@ def _prepare_recipe_content(post_query, request):
         filter_context[tag] = request.GET.get(tag.slug, '1')
         if filter_context[tag] == '1':
             filter_query.add(Q(tags__slug=tag.slug), Q.OR)
-        
+
     extended_query = post_query.filter(filter_query)
 
     if user is not None:
@@ -61,7 +61,7 @@ def _get_ingredients(request):
     Функция для разбора набора инридиентов из формы,
     которая посылается в сайта
     Пример входного ключа: nameIngredient_1
-    """        
+    """
     ingridient_names = {}
     ingridient_values = {}
     ingridient_units = {}
@@ -94,7 +94,7 @@ def _save_recipe(form, author, ingredients, recipe=None):
     """
     Функция сохрания рецепта в базу данных
     Создаются дополнительно записи для ингридиентов
-    """    
+    """
 
     recipe_from_form = form.save(commit=False)
     if recipe is None:

@@ -197,7 +197,6 @@ def delete_recipe(request, recipe_id):
     recipe.delete()
     messages.add_message(request, messages.INFO, 'Рецепт успешно удалён')
     return redirect('index')
-    
 
 
 @login_required
@@ -268,6 +267,7 @@ def about(request):
         'about/about.html',
     )
 
+
 def technology(request):
     """
     Страница об технологиях в проекте
@@ -276,5 +276,5 @@ def technology(request):
     return render(
         request,
         'about/technology.html',
-        { 'nav_page': 'technology' }
-    )    
+        {'nav_page': 'technology'}
+    )

@@ -126,7 +126,7 @@ class Ingredients(generics.ListAPIView):
 
         if not query:
             return []
-        
+
         return (
             Ingredient.objects
             .filter(name__istartswith=query.lower())[:self.MAX_LIMIT]

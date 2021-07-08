@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 
 from .models import (Favorite, Ingredient, IngredientQuanity, Purchases,
                      Recipe, RecipeTag, Subscriber)
@@ -25,9 +24,8 @@ class RecipeAdmin(admin.ModelAdmin):
     def favorite_count(self, obj):
         return obj.favorite_by_users.count()
 
-
     def tags_list(self, obj):
-        return ', '.join([t.name for t in obj.tags.all()])        
+        return ', '.join([t.name for t in obj.tags.all()])
 
 
 class IngredientAdmin(admin.ModelAdmin):
@@ -55,8 +53,10 @@ class FavoriteAdmin(admin.ModelAdmin):
 class PurchasesAdmin(admin.ModelAdmin):
     pass
 
+
 class RecipeTagAdmin(admin.ModelAdmin):
     pass
+
 
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(RecipeTag, RecipeTagAdmin)

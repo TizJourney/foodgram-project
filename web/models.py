@@ -19,9 +19,10 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
+
 class RecipeTag(models.Model):
     name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=40, unique=True)        
+    slug = models.SlugField(max_length=40, unique=True)
     color = models.SlugField(max_length=40,)
 
     class Meta:
@@ -31,7 +32,6 @@ class RecipeTag(models.Model):
     def __str__(self):
         title = f'Тег рецепта "{self.name}"'
         return title
-
 
 
 class Recipe(models.Model):
@@ -44,7 +44,7 @@ class Recipe(models.Model):
         RecipeTag,
         verbose_name="Теги",
         blank=True,
-        db_index=True, 
+        db_index=True,
     )
 
     author = models.ForeignKey(
