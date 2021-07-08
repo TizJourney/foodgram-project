@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 def page_not_found(request, exception):
     """
     Обработка ошибок 404. Работает только при DEBUG = False
