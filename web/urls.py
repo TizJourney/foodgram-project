@@ -35,5 +35,4 @@ urlpatterns = [
         views.shop_list_download,
         name='shop_list_download'
     ),
-    path('message/', views.message, name='message'),
 ]

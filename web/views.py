@@ -6,10 +6,11 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib import messages
 
 from .models import Purchases, Recipe
 
-from .utils import _prepare_recipe_content, _message_response, _process_recipe_form
+from .utils import _prepare_recipe_content, _process_recipe_form
 
 FOLLOW_PER_PAGE = 6
 
@@ -195,7 +196,9 @@ def delete_recipe(request, recipe_id):
     if not request.user.is_superuser and request.user != recipe.author:
         raise PermissionDenied()
     recipe.delete()
-    return _message_response(title='Рецепт успешно удалён')
+    messages.add_message(request, messages.INFO, 'Рецепт успешно удалён')
+    return redirect('index')
+    
 
 
 @login_required
@@ -254,21 +257,6 @@ def shop_list_download(request):
     response = HttpResponse(content, content_type='text/plain; charset=utf8')
     response['Content-Disposition'] = 'attachment; filename=shop_list.txt'
     return response
-
-
-def message(request):
-    """
-    Вывод сообщений пользователю об успехе таких операций,
-    создание и редактирование рецепта
-    """
-
-    message = request.GET.get('message')
-    title = request.GET.get('title')
-    return render(request, 'base/message.html', {
-        'title': title,
-        'message': message
-    },
-    )
 
 
 def page_not_found(request, exception):

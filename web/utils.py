@@ -1,5 +1,4 @@
 from django.db.models import Count, Q
-from django.urls import reverse
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 
@@ -7,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Ingredient, IngredientQuanity, RecipeTag
 from .forms import RecipeForm
+from django.contrib import messages
 
 RECIPE_PER_PAGE = 6
 FOLLOW_PER_PAGE = 6
@@ -56,16 +56,6 @@ def _prepare_recipe_content(post_query, request):
         'paginator': paginator,
         'filter': filter_context
     }
-
-
-def _message_response(title='', message=''):
-    """
-    Общая функция по созданию сообщения для пользователя
-    """      
-    message = ''
-    base_url = reverse('message')
-    url = f'{base_url}?title={title}&message={message}'
-    return redirect(url)
 
 
 def _get_ingredients(request):
@@ -135,7 +125,8 @@ def _process_recipe_form(request, message, instance, nav_page, new):
         ingredients = _get_ingredients(request)
         if ingredients:
             _save_recipe(form, request.user, ingredients, instance)
-            return _message_response(title=message)
+            messages.add_message(request, messages.INFO, message)
+            return redirect('index')
         form.add_error(None, 'В форме должны быть ингридиенты')
 
     return render(
