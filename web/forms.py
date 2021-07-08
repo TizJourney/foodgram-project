@@ -5,15 +5,12 @@ from .models import Recipe
 
 class RecipeForm(forms.ModelForm):
     ingredients = forms.CharField(required=False)
+    tags = forms.BooleanField()
 
     class Meta:
         model = Recipe
         fields = (
             'name',
-            'breakfast_tag',
-            'lunch_tag',
-            'dinner_tag',
-            'ingredients',
             'time',
             'description',
             'image',
@@ -22,4 +19,5 @@ class RecipeForm(forms.ModelForm):
             'text': forms.Textarea(),
             'image': forms.FileInput(),
             'ingredients': forms.CheckboxSelectMultiple(),
+            'tags': forms.CheckboxSelectMultiple(),
         }

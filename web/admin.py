@@ -10,9 +10,7 @@ class RecipeAdmin(admin.ModelAdmin):
         'pk',
         'name',
         'author',
-        'breakfast_tag',
-        'dinner_tag',
-        'lunch_tag',
+        #'tags', todo: добавить в админку
         'time',
         'description',
         'image',

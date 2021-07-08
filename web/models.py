@@ -35,10 +35,6 @@ class Recipe(models.Model):
         db_index=True
     )
 
-    breakfast_tag = models.BooleanField('Завтрак', db_index=True)
-    lunch_tag = models.BooleanField('Обед', db_index=True)
-    dinner_tag = models.BooleanField('Ужин', db_index=True)
-
     pub_date = models.DateTimeField(
         'Дата создания',
         auto_now_add=True,
@@ -74,6 +70,28 @@ class Recipe(models.Model):
     def __str__(self):
         title = f'Рецепт {self.name}'
         return title
+
+
+class RecipeTags(models.Model):
+    class Tag(models.TextChoices):
+        BREAKFAST = ('breakfast', 'Завтрак')
+        LUNCH = ('lunch', 'Обед')
+        DINNER = ('dinner', 'Ужин')
+
+    TAG_MAX_LENGTH = min(150, max((len(c[0]) for c in Tag.choices)))
+
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='recipe_tags',
+        verbose_name='теги рецепта',
+    )
+
+    name = models.CharField(
+        max_length=TAG_MAX_LENGTH,
+        choices=Tag.choices,
+        default=Tag.BREAKFAST,
+    )
 
 
 class IngredientQuanity(models.Model):
