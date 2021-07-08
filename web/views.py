@@ -239,7 +239,7 @@ def shop_list_download(request):
     query_list = list(
         Recipe.objects
         .filter(purchase_by_users__user=request.user)
-        .prefetch_related('ingredients')
+        .prefetch_related('ingredients_quantities')
     )
     shop_list_data = defaultdict(int)
     for item in query_list:
