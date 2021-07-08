@@ -19,11 +19,23 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
+class RecipeTag(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=40, unique=True)        
+    color = models.SlugField(max_length=40,)
+
 
 class Recipe(models.Model):
     name = models.TextField(
         'Название рецепта',
         help_text='Название рецепта. Обязательно к заполнению.'
+    )
+
+    tags = models.ManyToManyField(
+        RecipeTag,
+        verbose_name="Теги",
+        blank=True,
+        db_index=True, 
     )
 
     author = models.ForeignKey(
@@ -70,28 +82,6 @@ class Recipe(models.Model):
     def __str__(self):
         title = f'Рецепт {self.name}'
         return title
-
-
-class RecipeTags(models.Model):
-    class Tag(models.TextChoices):
-        BREAKFAST = ('breakfast', 'Завтрак')
-        LUNCH = ('lunch', 'Обед')
-        DINNER = ('dinner', 'Ужин')
-
-    TAG_MAX_LENGTH = min(150, max((len(c[0]) for c in Tag.choices)))
-
-    recipe = models.ForeignKey(
-        Recipe,
-        on_delete=models.CASCADE,
-        related_name='recipe_tags',
-        verbose_name='теги рецепта',
-    )
-
-    name = models.CharField(
-        max_length=TAG_MAX_LENGTH,
-        choices=Tag.choices,
-        default=Tag.BREAKFAST,
-    )
 
 
 class IngredientQuanity(models.Model):

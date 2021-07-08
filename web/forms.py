@@ -1,11 +1,14 @@
 from django import forms
 
-from .models import Recipe
+from .models import Recipe, RecipeTag
 
 
 class RecipeForm(forms.ModelForm):
     ingredients = forms.CharField(required=False)
-    tags = forms.BooleanField()
+    tags= forms.ModelMultipleChoiceField(
+        queryset=RecipeTag.objects.all(),
+        to_field_name='slug'
+    )
 
     class Meta:
         model = Recipe
@@ -19,5 +22,4 @@ class RecipeForm(forms.ModelForm):
             'text': forms.Textarea(),
             'image': forms.FileInput(),
             'ingredients': forms.CheckboxSelectMultiple(),
-            'tags': forms.CheckboxSelectMultiple(),
         }

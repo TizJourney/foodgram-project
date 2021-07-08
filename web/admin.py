@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 
 from .models import (Favorite, Ingredient, IngredientQuanity, Purchases,
-                     Recipe, Subscriber)
+                     Recipe, Subscriber, RecipeTag)
 
 class RecipeAdmin(admin.ModelAdmin):
     list_display = (
@@ -51,8 +51,11 @@ class FavoriteAdmin(admin.ModelAdmin):
 class PurchasesAdmin(admin.ModelAdmin):
     pass
 
+class RecipeTagAdmin(admin.ModelAdmin):
+    pass
 
 admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(RecipeTag, RecipeTagAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(IngredientQuanity, IngredientQuanityAdmin)
 admin.site.register(Subscriber, SubscriberAdmin)

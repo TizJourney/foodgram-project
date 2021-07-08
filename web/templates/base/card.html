@@ -4,7 +4,7 @@
     {% endif %}
     <div class="card__body">
         <a class="card__title link" href="{% url 'recipe' recipe_id=card.pk %}" target="_blank">{{ card.name }}</a>
-        <ul class="card__items">
+        <!-- <ul class="card__items">
             {% if card.breakfast_tag %}
             <li class="card__item"><span class="badge badge_style_orange">Завтрак</span></li>            
             {% endif %}
@@ -14,7 +14,7 @@
             {% if card.dinner_tag %}
             <li class="card__item"><span class="badge badge_style_purple">Ужин</span></li>
             {% endif %}
-        </ul>
+        </ul> -->
         <div class="card__items card__items_column">
             <p class="card__text"><span class="icon-time"></span> {{ card.time }} мин.</p>
             <p class="card__text"><span class="icon-user"></span> <a href="{% url 'recipes_by_author' author_id=card.author.pk %}" style="color: black">{{ card.author }}</a>
