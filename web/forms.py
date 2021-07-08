@@ -4,16 +4,18 @@ from .models import Recipe, RecipeTag
 
 
 class RecipeForm(forms.ModelForm):
-    ingredients = forms.CharField(required=False)
     tags= forms.ModelMultipleChoiceField(
         queryset=RecipeTag.objects.all(),
         to_field_name='slug'
     )
+    ingredients = forms.CharField(required=False)    
 
     class Meta:
         model = Recipe
         fields = (
             'name',
+            'tags',
+            'ingredients',
             'time',
             'description',
             'image',
@@ -21,5 +23,4 @@ class RecipeForm(forms.ModelForm):
         widgets = {
             'text': forms.Textarea(),
             'image': forms.FileInput(),
-            'ingredients': forms.CheckboxSelectMultiple(),
         }

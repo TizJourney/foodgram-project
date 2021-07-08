@@ -13,26 +13,16 @@
             {% csrf_token %}
             {% for field in form %}
                 {% if field.name == 'tags' %}
-                    <div class="form__group">
-                        <p class="form__label">Теги</p>
-                        <div class="form__field-group">
-                            <div class="tags">
-                                <div class="tags__item">
-                                    <input type="checkbox" name="{{ field.name }}" id="{{ field.id_for_label }}" class="tags__checkbox tags__checkbox_style_orange" {% if field.value %}checked{% endif %}>
-                                    <label for="{{ field.id_for_label }}" class="tags__label">{{ field.label }}</label>
-                                </div>
-                    {% for choice in field.field.choices %}
-                        <div class="tags__item">
-                            <input type="checkbox" name="{{ field.name }}_{{ choice.0 }}" id="{{ field.id_for_label }}_{{ choice.0 }}" class="tags__checkbox tags__checkbox_style_green" {% if field.value %}checked{% endif %}>
-                            <label for="{{ field.id_for_label }}_{{ choice.0 }}" class="tags__label">{{ field.label }}_{{ choice.0 }}</label>
-                        </div>
-                    {% endfor %}
-                    {% elif field.name == 'lunch_tag' %}
-                    {% elif field.name == 'dinner_tag'%}
-                                <div class="tags__item">
-                                    <input type="checkbox" name="{{ field.name }}" id="{{ field.id_for_label }}" class="tags__checkbox tags__checkbox_style_purple" {% if field.value %}checked{% endif %}>
-                                    <label for="{{ field.id_for_label }}" class="tags__label">{{ field.label }}</label>
-                                </div>
+                <div class="form__group">
+                    <p class="form__label">Теги</p>
+                    <div class="form__field-group">
+                        <div class="tags">
+                            {% for tag in field.field.queryset.all %}
+                            <div class="tags__item">
+                                <input type="checkbox" name="tag" value="{{ tag.slug }}" id="{{ tag.id }}" class="tags__checkbox tags__checkbox_style_{{ tag.color }} {% if tag in form.instance.tag.all %}checked {% endif %}">
+                                <label for="id_{{ tag.slug }}" class="tags__label">{{ tag.name }}</label>
+                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
