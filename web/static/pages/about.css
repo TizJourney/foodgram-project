@@ -61,6 +61,7 @@
 @import "../blocks/icon-check/icon-check.css";
 
 @import "../blocks/student/student.css";
+@import "../blocks/tech/tech.css";
 
 * {
     box-sizing: border-box;
