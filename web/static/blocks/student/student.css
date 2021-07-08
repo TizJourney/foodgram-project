@@ -1,0 +1,65 @@
+.student {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    column-gap: 270px;
+  }
+  
+  .student__text-blocks {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .student__title {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 1.16;
+    letter-spacing: -0.04em;
+  }
+  
+  .student__subtitle {
+    margin: 18px 0 0 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.11;
+  }
+  
+  .student__text {
+    margin: 26px 0 0 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 1.57;
+  }
+  
+  .student__links-block {
+    margin-top: auto;
+    display:flex;
+    flex-direction: row;
+  }
+  
+  .student__link {
+    margin-right: 20px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: black;
+  }
+  
+  .student__photo {
+    width: 270px;
+    border-radius: 10px;
+  }
+  
+  

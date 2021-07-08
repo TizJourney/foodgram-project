@@ -60,6 +60,8 @@
 @import "../blocks/icon-favorite/_active/icon-favorite_active.css";
 @import "../blocks/icon-check/icon-check.css";
 
+@import "../blocks/student/student.css";
+
 * {
     box-sizing: border-box;
 }
