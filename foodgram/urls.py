@@ -11,8 +11,8 @@ urlpatterns = [
     path('', include('web.urls')),
 ]
 
-handler404 = 'web.views.page_not_found'  # noqa
-handler500 = 'web.views.server_error'  # noqa
+handler404 = 'foodgram.views.page_not_found'  # noqa
+handler500 = 'foodgram.views.server_error'  # noqa
 
 if settings.DEBUG:
     import debug_toolbar
