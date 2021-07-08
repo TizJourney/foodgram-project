@@ -35,4 +35,15 @@ urlpatterns = [
         views.shop_list_download,
         name='shop_list_download'
     ),
+    path(
+        'about/',
+        views.about,
+        name='about'
+    ),
+    path(
+        'technology/',
+        views.technology,
+        name='technology'
+    ),
+
 ]
