@@ -7,19 +7,19 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import RecipeForm
 from .models import Purchases, Recipe
 
-from .utils import _prepare_recipe_content, _message_response, _get_ingredients, _save_recipe
+from .utils import _prepare_recipe_content, _message_response, _process_recipe_form
 
 FOLLOW_PER_PAGE = 6
 
 User = get_user_model()
 
+
 def index(request):
     """
     Основная страница рецептов. Доступна всем пользователям.
-    """      
+    """
     recipe_query = (
         Recipe.objects
         .all()
@@ -42,7 +42,7 @@ def index(request):
 def recipes_by_author(request, author_id):
     """
     Отрисовка списка рецептов конкртного автора
-    """        
+    """
 
     author = get_object_or_404(User, id=author_id)
 
@@ -69,7 +69,7 @@ def recipes_by_author(request, author_id):
 def favorite(request):
     """
     Отрисовка списка любимых рецептов
-    """        
+    """
 
     recipe_query = (
         Recipe
@@ -96,7 +96,7 @@ def favorite(request):
 def recipe_view(request, recipe_id):
     """
     Отрисовка детальной информации о одном рецепте
-    """        
+    """
 
     recipe = get_object_or_404(Recipe, id=recipe_id)
     is_favoried = (
@@ -123,39 +123,21 @@ def recipe_view(request, recipe_id):
     return render(request, 'recipes/singlePage.html', context)
 
 
-
-
 @login_required
 def edit_recipe(request, recipe_id):
     """
     Функциональность редактирования существующего рецепта
-    """    
+    """
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     if not request.user.is_superuser and request.user != recipe.author:
         raise PermissionDenied()
 
-    if request.method == 'POST':
-        form = RecipeForm(request.POST, files=request.FILES or None)
-        form.instance = recipe
-
-        if form.is_valid():
-            ingredients = _get_ingredients(request)
-            if ingredients:
-                _save_recipe(form, request.user, ingredients, recipe)
-                return _message_response(title='Рецепт успешно изменён')
-            form.add_error(None, 'В форме должны быть ингридиенты')
-
-        return render(
-            request,
-            'recipes/editRecipe.html',
-            {'form': form, 'new': False, 'nav_page': 'edit_recipe'}
-        )
-
-    form = RecipeForm(instance=recipe)
-    return render(
+    return _process_recipe_form(
         request,
-        'recipes/editRecipe.html',
-        {'form': form, 'new': False, 'nav_page': 'edit_recipe'}
+        message='Рецепт успешно изменён',
+        instance=recipe,
+        nav_page='edit_recipe',
+        new=False
     )
 
 
@@ -164,27 +146,12 @@ def new_recipe(request):
     """
     Функциональность создания нового рецепта
     """
-
-    if request.method == 'POST':
-        form = RecipeForm(request.POST, files=request.FILES or None)
-        if form.is_valid():
-            ingredients = _get_ingredients(request)
-            if ingredients:
-                _save_recipe(form, request.user, ingredients)
-                return _message_response(title='Рецепт успешно создан')
-            form.add_error(None, 'В форме должны быть ингриденты')
-
-        return render(
-            request,
-            'recipes/editRecipe.html',
-            {'form': form, 'new': True, 'nav_page': 'new_recipe'}
-        )
-
-    form = RecipeForm()
-    return render(
+    return _process_recipe_form(
         request,
-        'recipes/editRecipe.html',
-        {'form': form, 'new': True, 'nav_page': 'new_recipe'}
+        message='Рецепт успешно создан',
+        instance=None,
+        nav_page='new_recipe',
+        new=True
     )
 
 

@@ -3,9 +3,10 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Ingredient, IngredientQuanity, RecipeTag
+from .forms import RecipeForm
 
 RECIPE_PER_PAGE = 6
 FOLLOW_PER_PAGE = 6
@@ -123,3 +124,22 @@ def _save_recipe(form, author, ingredients, recipe=None):
         )
         recipe_ingredient.save()
     form.save_m2m()
+
+
+def _process_recipe_form(request, message, instance, nav_page, new):
+    form = RecipeForm(request.POST or None, files=request.FILES or None)
+    if instance is not None:
+        form.instance = instance
+
+    if form.is_valid():
+        ingredients = _get_ingredients(request)
+        if ingredients:
+            _save_recipe(form, request.user, ingredients, instance)
+            return _message_response(title=message)
+        form.add_error(None, 'В форме должны быть ингридиенты')
+
+    return render(
+        request,
+        'recipes/editRecipe.html',
+        {'form': form, 'new': new, 'nav_page': nav_page}
+    )
