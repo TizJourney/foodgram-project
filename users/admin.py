@@ -5,6 +5,7 @@ User = get_user_model()
 
 from django.contrib.auth.admin import UserAdmin
 
+
 class CustomUserAdmin(UserAdmin):
     list_filter = ('email', 'username')
 
