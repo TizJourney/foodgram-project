@@ -19,7 +19,7 @@
                         <div class="tags">
                             {% for tag in field.field.queryset.all %}
                             <div class="tags__item">
-                                <input type="checkbox" name="tag" value="{{ tag.slug }}" id="{{ tag.id }}" class="tags__checkbox tags__checkbox_style_{{ tag.color }} {% if tag in form.instance.tag.all %}checked {% endif %}">
+                                <input type="checkbox" name="tags" value="{{ tag.slug }}" id="{{ tag.id }}" class="tags__checkbox tags__checkbox_style_{{ tag.color }} {% if tag in form.instance.tags.all %}checked {% endif %}">
                                 <label for="id_{{ tag.slug }}" class="tags__label">{{ tag.name }}</label>
                             </div>
                             {% endfor %}
