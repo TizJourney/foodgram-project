@@ -10,7 +10,7 @@ class RecipeAdmin(admin.ModelAdmin):
         'pk',
         'name',
         'author',
-        #'tags', todo: добавить в админку
+        'tags_list',
         'time',
         'description',
         'image',
@@ -24,6 +24,10 @@ class RecipeAdmin(admin.ModelAdmin):
 
     def favorite_count(self, obj):
         return obj.favorite_by_users.count()
+
+
+    def tags_list(self, obj):
+        return ', '.join([t.name for t in obj.tags.all()])        
 
 
 class IngredientAdmin(admin.ModelAdmin):
