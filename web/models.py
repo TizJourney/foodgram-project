@@ -24,6 +24,15 @@ class RecipeTag(models.Model):
     slug = models.SlugField(max_length=40, unique=True)        
     color = models.SlugField(max_length=40,)
 
+    class Meta:
+        verbose_name = 'Тег рецепта'
+        verbose_name_plural = 'Теги рецепта'
+
+    def __str__(self):
+        title = f'Тег рецепта "{self.name}"'
+        return title
+
+
 
 class Recipe(models.Model):
     name = models.TextField(
