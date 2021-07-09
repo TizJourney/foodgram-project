@@ -34,6 +34,8 @@ const cardList = new CardList(container, '.card', header, api, true, {
     favorites
 });
 
+const infoPopup = new InfoPopup('.info-popup', 'info-popup_visible');
+
 cardList.addEvent();
 
 
