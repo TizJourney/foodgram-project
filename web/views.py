@@ -32,8 +32,6 @@ def index(request):
     context['title'] = 'Рецепты'
     context['nav_page'] = 'index'
 
-    messages.add_message(request, messages.INFO, 'Тестовое сообщение')
-
     return render(
         request,
         'recipes/recipes.html',
