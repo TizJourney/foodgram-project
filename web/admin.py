@@ -25,7 +25,7 @@ class RecipeAdmin(admin.ModelAdmin):
         return obj.favorite_by_users.count()
 
     def tags_list(self, obj):
-        return ', '.join([t.name for t in obj.tags.all()])
+        return ', '.join([item[0] for item in obj.tags.values_list('name')])
 
 
 class IngredientAdmin(admin.ModelAdmin):
