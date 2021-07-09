@@ -1,0 +1,7 @@
+{% if messages %}
+<ul class="info-popup info-popup_info">
+    {% for message in messages %}
+    <li class="info-popup__message">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}    

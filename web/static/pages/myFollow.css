@@ -62,6 +62,8 @@
 
 @import "../blocks/icon-time/icon-time.css";
 
+@import "../blocks/info-popup/info-popup.css";
+
 
 * {
     box-sizing: border-box;

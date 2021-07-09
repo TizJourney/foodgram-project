@@ -1,0 +1,28 @@
+.info-popup {
+    position: fixed;
+    right: 100px;
+    bottom: 100px;
+    width: calc(min(400px, 100% - 40px));
+    border: 2px red solid;
+    padding: 10px 10px 0 10px;
+    }
+
+.info-popup_info {
+    border: 2px solid #2BE080;
+    background: greenyellow;    
+}
+
+.info-popup__message {
+    list-style-type: none;
+    margin: 0 0 10px 0;
+    text-decoration: none;
+    padding: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 1.22;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: black;
+}

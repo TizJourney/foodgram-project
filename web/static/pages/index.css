@@ -86,6 +86,8 @@
 @import "../blocks/icon-favorite/_active/icon-favorite_active.css";
 @import "../blocks/icon-check/icon-check.css";
 
+@import "../blocks/info-popup/info-popup.css";
+
 * {
     box-sizing: border-box;
 }
