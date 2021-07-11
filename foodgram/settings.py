@@ -8,10 +8,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    '130.193.46.187',
-    'localhost',
-    'tiz-foodgram.ml',
-    'www.tiz-foodgram.ml'
+    '*'
 ]
 
 DATABASES = {
