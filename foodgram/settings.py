@@ -3,7 +3,12 @@ from .settings_common import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '130.193.46.187',
+    'localhost',
+    'tiz-foodgram.ml',
+    'www.tiz-foodgram.ml'
+]
 
 DATABASES = {
     'default': {
@@ -30,7 +35,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 587
-EMAIL_USE_TLS=True
+EMAIL_USE_TLS = True
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
