@@ -15,8 +15,8 @@
             </p>
         </div>
     </div>
+    {% if user.is_authenticated %}
     <div class="card__footer">
-        {% if user.is_authenticated %}
             {% if card.is_in_shop_list %}
             <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span> Рецепт добавлен</button>
             {% else %}
@@ -30,6 +30,6 @@
             <button class="button button_style_none" name="favorites" data-out><span
                 class="icon-favorite"></span></button>
             {% endif %}
-        {% endif %}
     </div>
+    {% endif %}
 </div>

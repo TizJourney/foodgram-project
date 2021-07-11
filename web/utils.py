@@ -32,7 +32,7 @@ def _prepare_recipe_content(post_query, request):
         if filter_context[tag] == '1':
             filter_query.add(Q(tags__slug=tag.slug), Q.OR)
 
-    extended_query = post_query.filter(filter_query)
+    extended_query = post_query.filter(filter_query).distinct()
 
     if user is not None:
         favoriedQuery = Q(favorite_by_users__user=user)
@@ -100,7 +100,7 @@ def _save_recipe(form, author, ingredients, recipe=None):
     if recipe is None:
         recipe_from_form.author = author
     recipe_from_form.save()
-
+    
     recipe_from_form.ingredients_quantities.all().delete()
 
     for item in ingredients:
