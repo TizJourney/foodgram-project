@@ -13,9 +13,12 @@ ALLOWED_HOSTS = []
 
 LANGUAGE_CODE = 'ru'
 
+SITE_ID=1
+
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
