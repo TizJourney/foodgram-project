@@ -1,7 +1,7 @@
 [![Foodgram workflow](https://github.com/TizJourney/foodgram-project-react/actions/workflows/foodgram_workflow.yaml/badge.svg)](https://github.com/TizJourney/foodgram-project-react/actions/workflows/foodgram_workflow.yaml)
 
 # foodgram проект
-* Адрес проекта: http://www.tiz-foodgram.ml/
+* Адрес проекта: http://tiz-foodgram.ml/
 
 # Сайт для работы с рецептами
 Сайт содержит фукнкциональность для сохранения рецептов. 
@@ -42,6 +42,7 @@
 * Загрузить ингредиенты в базу: `sudo docker-compose exec web python manage.py fill_ings ingredients.json`
 * Создать фильтры: `sudo docker-compose exec web python manage.py init_tags`
 
+* Сохранить текущую базу: `sudo docker-compose exec web python manage.py dumpdata > fixtures.json`
 
 ### Устройство проекта
 Логически проект разбит на 4 приложения: 
