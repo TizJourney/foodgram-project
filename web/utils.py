@@ -100,7 +100,7 @@ def _save_recipe(form, author, ingredients, recipe=None):
     if recipe is None:
         recipe_from_form.author = author
     recipe_from_form.save()
-    
+
     recipe_from_form.ingredients_quantities.all().delete()
 
     for item in ingredients:
