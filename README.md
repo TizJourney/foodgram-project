@@ -1,7 +1,7 @@
 [![Foodgram workflow](https://github.com/TizJourney/foodgram-project-react/actions/workflows/foodgram_workflow.yaml/badge.svg)](https://github.com/TizJourney/foodgram-project-react/actions/workflows/foodgram_workflow.yaml)
 
 # foodgram проект
-* Адрес проекта: http://tiz-foodgram.ml/
+* Адрес проекта: http://www.tiz-foodgram.ml/
 
 # Сайт для работы с рецептами
 Сайт содержит фукнкциональность для сохранения рецептов. 
