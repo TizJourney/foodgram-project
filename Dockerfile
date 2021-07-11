@@ -12,4 +12,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 RUN python manage.py collectstatic --no-input
 
-CMD gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000 --error-logfile=errors.log 
+CMD gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000 --error-logfile=errors.log 

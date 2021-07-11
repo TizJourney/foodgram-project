@@ -18,7 +18,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-DEFAULT_FROM_EMAIL = 'admin@yamdb.com'
+DEFAULT_FROM_EMAIL = 'admin@foodgram.com'
 
 # настройка посылки e-mail: используем "файловую" посылку. по сути эмуляция
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
