@@ -4,8 +4,6 @@ volumes:
   postgres_data:
   media_volumes:
   static_volumes:
-  ./data/certbot/conf:
-  ./data/certbot/www:
 
 services:
   db:
