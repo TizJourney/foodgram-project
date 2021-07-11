@@ -60,6 +60,9 @@ jobs:
           envkey_POSTGRES_PASSWORD: "postgres"
           envkey_DB_HOST: "db"
           envkey_DB_PORT: "5432"
+          envkey_EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          envkey_EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+
       - name: copy file via ssh key
         uses: appleboy/scp-action@master
         with:
