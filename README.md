@@ -15,6 +15,7 @@
 * Django: основной python framework, на основе которого сделан api
 * Frontend: HTML, JavaScript, CSS
 
+## Локальная версия
 ### Инструация по запуску локальной версии
 * Ставим виртуальное окружение: `python -m venv venv`
 * Ставим пакеты `pip install -r requirements_dev.txt`
@@ -31,10 +32,15 @@
 * Загруженные изображения складываются в папку: `media`
 * База данных находится в файле: `db.sqlite3`
 
-### Облачная версия
+## Облачная версия
+### Инструация по запуску облачной версии
 * Зайти на продакшен машину 
 * Перейти в папку конфигов: `cd ~/foodgram`
-* Запустите скрипт `sudo docker-compose exec web python manage.py migrate --noinput`
+* Инициация базы данных: `sudo docker-compose exec web python manage.py migrate --noinput`
+* Создать администратора: `sudo docker-compose exec web python manage.py createsuperuser`
+* Загрузить ингредиенты в базу: `sudo docker-compose exec web python manage.py fill_ings ingredients.json`
+* Создать фильтры: `sudo docker-compose exec web python manage.py init_tags`
+
 
 ### Устройство проекта
 Логически проект разбит на 4 приложения: 
