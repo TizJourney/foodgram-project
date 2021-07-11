@@ -1,3 +1,5 @@
+[![Foodgram workflow](https://github.com/TizJourney/foodgram-project-react/actions/workflows/foodgram_workflow.yaml/badge.svg)](https://github.com/TizJourney/foodgram-project-react/actions/workflows/foodgram_workflow.yaml)
+
 # foodgram проект
 
 # Сайт для работы с рецептами
