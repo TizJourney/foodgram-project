@@ -17,7 +17,7 @@
 * Frontend: HTML, JavaScript, CSS
 
 ## Локальная версия
-### Инструация по запуску локальной версии
+### Инструкция по запуску локальной версии
 * Ставим виртуальное окружение: `python -m venv venv`
 * Ставим пакеты `pip install -r requirements_dev.txt`
 * Создать базу данных: `python manage.py makemigrations` и `python manage.py migrate`
@@ -34,7 +34,7 @@
 * База данных находится в файле: `db.sqlite3`
 
 ## Облачная версия
-### Инструация по запуску облачной версии
+### Инструкция по запуску облачной версии
 * Зайти на продакшен машину 
 * Перейти в папку конфигов: `cd ~/foodgram`
 * Инициация базы данных: `sudo docker-compose exec web python manage.py migrate --noinput`
