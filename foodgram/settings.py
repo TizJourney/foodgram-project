@@ -1,5 +1,9 @@
 # flake8: noqa
+import sentry_sdk
+
 from .settings_common import *
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 DEBUG = False
 
@@ -39,3 +43,14 @@ EMAIL_USE_TLS = True
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
+
+SENTRY_DSN = f"https://{os.environ.get('SENTRY_KEY')}@sentry.io/{os.environ.get('SENTRY_PROJECT')}"
+
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    integrations=[DjangoIntegration()],
+
+    traces_sample_rate=1.0,
+
+    send_default_pii=True
+)
