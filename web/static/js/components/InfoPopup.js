@@ -2,7 +2,7 @@ class InfoPopup {
     constructor(querySelector, visibilityClass) {
         this.element = document.querySelector(querySelector);
         this.hidePopup = () => {
-            if (his.element) {
+            if (this.element) {
                 this.element.classList.remove(visibilityClass);
             }
         }
