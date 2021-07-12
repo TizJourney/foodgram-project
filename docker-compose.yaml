@@ -28,7 +28,7 @@ services:
       - ./.env 
 
   nginx:  
-    image: nginx:alpine:1.21.1
+    image: nginx:1.21.1-alpine
     restart: always
 
     volumes:
