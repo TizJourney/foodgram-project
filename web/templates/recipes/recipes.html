@@ -18,6 +18,12 @@
         </ul>
     </div>
     
+    {% if is_subscribed is not None %}
+    <div class="button-container">
+        {% include 'base/subscribeButton.html' %}
+    </div>        
+    {% endif %}
+    
     <div class="card-list">
         {% for card in page %}
             {% include 'base/card.html' %}
@@ -36,6 +42,9 @@
     <script src="{% static 'js/components/Purchases.js' %}"></script>
     <script src="{% static 'js/components/Favorites.js' %}"></script>
     <script src="{% static 'js/components/CardList.js' %}"></script>
+    {% if is_subscribed is not None %}
+    <script src="{% static 'js/components/Subscribe.js' %}"></script>
+    {% endif %}
     
     <script src="{% static 'js/components/Header.js' %}"></script>
 

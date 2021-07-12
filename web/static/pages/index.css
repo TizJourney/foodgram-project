@@ -88,6 +88,10 @@
 
 @import "../blocks/info-popup/info-popup.css";
 
+@import "../blocks/button-container/button-container.css";
+
+
+
 * {
     box-sizing: border-box;
 }

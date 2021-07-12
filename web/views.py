@@ -50,6 +50,13 @@ def recipes_by_author(request, author_id):
         Recipe.objects.filter(author=author)
         .all()
     )
+    
+    is_subscribed = (
+        request.user.is_authenticated
+        and author.subscribed_by_user.filter(
+            subscriber=request.user).exists()
+    )
+
 
     context = _prepare_recipe_content(
         recipe_query,
@@ -57,6 +64,7 @@ def recipes_by_author(request, author_id):
     )
     context['title'] = f'{author}'
     context['nav_page'] = 'author'
+    context['is_subscribed'] = is_subscribed
 
     return render(
         request,
