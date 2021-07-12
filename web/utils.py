@@ -5,6 +5,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import RecipeForm
 from .models import Ingredient, IngredientQuanity, RecipeTag
+from .serializers import (
+    IngredientInputSerializer, IngredientQuanityInputSerializer
+)
 
 RECIPE_PER_PAGE = 6
 FOLLOW_PER_PAGE = 6
@@ -109,19 +112,45 @@ def _get_ingredients(request):
             ingridient_units[key[UNITS_PREFIX_LEN:]] = value
 
     for key, name in ingridient_names.items():
-        ingredients.append(
-            {
+        new_item = {
                 'name': name,
                 'value': ingridient_values.get(key),
                 'units': ingridient_units.get(key)
             }
-        )
+
+        ingredient_serializer = IngredientInputSerializer(data={
+            'name': new_item['name'],
+            'units': new_item['units'],
+        })
+        if not ingredient_serializer.is_valid():
+            error_message = (
+                f'Неверное описание ингредиента "{name}"'
+            )
+            return None, error_message
+        
+        if not Ingredient.objects.filter(name=name).exists():
+            error_message = (
+                f'В базе данных нет ингредиента "{name}"'
+            )
+            return None, error_message
+
+        quanity_serializer = IngredientQuanityInputSerializer(data={
+            'value': new_item['value']
+        })
+
+        if not quanity_serializer.is_valid():
+            error_message = (
+                f'Неправильное количество ингредиента "{name}"'
+            )
+            return None, error_message
 
         if name in know_ingredients:
             error_message = (
-                f'Невозможно создать рецепт с дубликатами ингрединта "{name}"'
+                f'Невозможно создать рецепт с дубликатами ингредиента "{name}"'
             )
             return None, error_message
+
+        ingredients.append(new_item)
         know_ingredients.add(name)
     return ingredients, None
 
@@ -129,7 +158,7 @@ def _get_ingredients(request):
 def _save_recipe(form, author, ingredients, recipe=None):
     """
     Функция сохрания рецепта в базу данных
-    Создаются дополнительно записи для ингридиентов
+    Создаются дополнительно записи для ингредиентов
     """
 
     recipe_from_form = form.save(commit=False)
@@ -146,6 +175,7 @@ def _save_recipe(form, author, ingredients, recipe=None):
             value=item['value'],
             ingredient=ingredient,
         )
+        recipe_ingredient.full_clean()
         recipe_ingredient.save()
     form.save_m2m()
 
@@ -162,7 +192,7 @@ def _process_recipe_form(request, message, instance, nav_page, new):
         if error is not None:
             form.add_error(None, error)
         elif not ingredients:
-            error = 'В форме должны быть ингридиенты'
+            error = 'В форме должны быть ингредиенты'
         
         if error is None:
             _save_recipe(form, request.user, ingredients, instance)

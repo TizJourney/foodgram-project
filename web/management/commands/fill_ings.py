@@ -13,7 +13,7 @@ from web.models import Ingredient
 
 
 class Command(BaseCommand):
-    help = 'Скрипт загрузки ингридентов из json файла'
+    help = 'Скрипт загрузки ингредиентов из json файла'
 
     def add_arguments(self, parser):
         parser.add_argument('data', type=str)
