@@ -95,6 +95,7 @@ def _get_ingredients(request):
     ingridient_units = {}
 
     ingredients = []
+    know_ingredients = set()
 
     if not request.POST:
         return []
@@ -115,7 +116,14 @@ def _get_ingredients(request):
                 'units': ingridient_units.get(key)
             }
         )
-    return ingredients
+
+        if name in know_ingredients:
+            error_message = (
+                f'Невозможно создать рецепт с дубликатами ингрединта "{name}"'
+            )
+            return None, error_message
+        know_ingredients.add(name)
+    return ingredients, None
 
 
 def _save_recipe(form, author, ingredients, recipe=None):
@@ -150,8 +158,13 @@ def _process_recipe_form(request, message, instance, nav_page, new):
     )
 
     if form.is_valid():
-        ingredients = _get_ingredients(request)
-        if ingredients:
+        ingredients, error = _get_ingredients(request)
+        if error is not None:
+            form.add_error(None, error)
+        elif not ingredients:
+            error = 'В форме должны быть ингридиенты'
+        
+        if error is None:
             _save_recipe(form, request.user, ingredients, instance)
             messages.add_message(request, messages.INFO, message)
             return redirect('index')
@@ -162,7 +175,7 @@ def _process_recipe_form(request, message, instance, nav_page, new):
             files=request.FILES or None,
             instance=instance or None
         )
-        form.add_error(None, 'В форме должны быть ингридиенты')
+        form.add_error(None, error)
 
     return render(
         request,
