@@ -65,6 +65,7 @@ def recipes_by_author(request, author_id):
     context['title'] = f'{author}'
     context['nav_page'] = 'author'
     context['is_subscribed'] = is_subscribed
+    context['author'] = author
 
     return render(
         request,

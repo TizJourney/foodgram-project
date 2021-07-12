@@ -19,9 +19,9 @@
     </div>
     
     {% if is_subscribed is not None %}
-    <div class="button-container">
+    <div class="button-container author-subscribe" data-author="{{ author.pk }}">        
         {% include 'base/subscribeButton.html' %}
-    </div>        
+    </div>
     {% endif %}
     
     <div class="card-list">
@@ -43,6 +43,7 @@
     <script src="{% static 'js/components/Favorites.js' %}"></script>
     <script src="{% static 'js/components/CardList.js' %}"></script>
     <script src="{% static 'js/components/Subscribe.js' %}"></script>
+    <script src="{% static 'js/components/AuthorRecipe.js' %}"></script>
     
     <script src="{% static 'js/components/Header.js' %}"></script>
 

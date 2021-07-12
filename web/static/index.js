@@ -1,5 +1,6 @@
 const container = document.querySelector('.card-list');
 const counterId = document.querySelector('#counter');
+const container_subscribe = document.querySelector('.author-subscribe');
 const api = new Api(apiUrl);
 const header = new Header(counterId);
 const configButton = {
@@ -24,6 +25,17 @@ const configButton = {
             class: '.icon-favorite_active',
             text: `<span class="icon-favorite icon-favorite_active"></span>`
         }
+    },
+    subscribe: {
+        attr: 'data-out',
+        default: {
+            class: 'button_style_blue',
+            text: 'Подписаться на автора'
+        },
+        active: {
+            class: 'button_style_blue',
+            text: `Отписаться от автора`
+        }
     }
 }
 const purchases = new Purchases(configButton.purchases, api);
@@ -35,8 +47,16 @@ const cardList = new CardList(container, '.card', header, api, true, {
     favorites
 });
 
+if (container_subscribe) {
+    const authorRecipeSubscribe = new AuthorRecipe(container_subscribe, '.author-subscribe', header, api, true, {
+        subscribe
+    });
+    authorRecipeSubscribe.addEvent();
+}
+
 const infoPopup = new InfoPopup('.info-popup', 'info-popup_visible');
 
 cardList.addEvent();
+
 
 
