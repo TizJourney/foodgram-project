@@ -8,10 +8,10 @@
     <div class="main__header">
         <h1 class="main__title">{{ title }}</h1>
         <ul class="tags">
-            {% for item, value in filter.items %}
+            {% for item, context in filter_context.filters.items %}
             <li class="tags__item">
-                <a id="{{ item.slug }}" class="tags__checkbox tags__checkbox_style_{{ item.color }} {% if value == '1' %}tags__checkbox_active{% endif %}"
-                href="{{ request.path }}?{% for url_item, url_value in filter.items %}{% if not forloop.first %}&{% endif %}{{ url_item.slug }}={% if url_item == item %}{% if url_value == '1' %}0{% else %}1{% endif %}{% else %}{{ url_value }}{% endif %}{% endfor %}"></a>
+                <a id="{{ item.slug }}" class="tags__checkbox tags__checkbox_style_{{ item.color }} {% if context.value %}tags__checkbox_active{% endif %}"
+                href="{{ request.path }}?{{ context.uri }}"></a>
                 <span class="tags__label">{{ item.name }}</span>
             </li>
             {% endfor %}

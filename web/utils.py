@@ -14,6 +14,38 @@ VALUE_PREFIX_LEN = len('valueIngredient_')
 UNITS_PREFIX_LEN = len('unitsIngredient_')
 
 
+def _create_uri(current_tag, filter_data):
+    params = {
+        tag.slug: not value if current_tag == tag else value
+        for tag, value in filter_data.items()
+    }
+    return '&'.join(
+        [f'{name}=0' for name, value in params.items() if not value]
+    )
+
+
+def _create_filter_context(request, recipe_tags):
+    filter_query = Q(pk__in=[])
+    filter_data = {}
+
+    for tag in recipe_tags:
+        filter_data[tag] = request.GET.get(tag.slug, '1') == '1'
+        if filter_data[tag]:
+            filter_query.add(Q(tags__slug=tag.slug), Q.OR)
+
+    filter_context = {
+        'default': _create_uri(None, filter_data),
+        'filters': {}
+    }
+    for tag in recipe_tags:
+        filter_context['filters'][tag] = {
+            'uri': _create_uri(tag, filter_data),
+            'value': filter_data[tag],
+        }
+
+    return filter_query, filter_context
+
+
 def _prepare_recipe_content(post_query, request):
     """
     Общая функция по созданию контента для отрисовки карточек рецептов.
@@ -24,13 +56,9 @@ def _prepare_recipe_content(post_query, request):
 
     user = request.user if request.user.is_authenticated else None
 
-    filter_query = Q(pk__in=[])
-
-    filter_context = {}
-    for tag in RecipeTag.objects.all():
-        filter_context[tag] = request.GET.get(tag.slug, '1')
-        if filter_context[tag] == '1':
-            filter_query.add(Q(tags__slug=tag.slug), Q.OR)
+    filter_query, filter_context = _create_filter_context(
+        request, list(RecipeTag.objects.all())
+    )
 
     extended_query = post_query.filter(filter_query).distinct()
 
@@ -52,7 +80,7 @@ def _prepare_recipe_content(post_query, request):
     return {
         'page': page,
         'paginator': paginator,
-        'filter': filter_context
+        'filter_context': filter_context,
     }
 
 
