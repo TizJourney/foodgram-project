@@ -87,6 +87,42 @@ def _prepare_recipe_content(post_query, request):
     }
 
 
+def _validate_ingredients(new_item):
+    '''
+    Проверка данных формы на валидность для специального поля ингердиентов
+    '''
+    
+    name = new_item['name']
+    ingredient_serializer = IngredientInputSerializer(data={
+        'name': new_item['name'],
+        'units': new_item['units'],
+    })
+
+    if not ingredient_serializer.is_valid():
+        error_message = (
+            f'Неверное описание ингредиента "{name}"'
+        )
+        return error_message
+
+    if not Ingredient.objects.filter(name=name).exists():
+        error_message = (
+            f'В базе данных нет ингредиента "{name}"'
+        )
+        return error_message
+
+    quanity_serializer = IngredientQuanityInputSerializer(data={
+        'value': new_item['value']
+    })
+
+    if not quanity_serializer.is_valid():
+        error_message = (
+            f'Неправильное количество ингредиента "{name}"'
+        )
+        return error_message
+
+    return None
+
+
 def _get_ingredients(request):
     """
     Функция для разбора набора инридиентов из формы,
@@ -97,8 +133,8 @@ def _get_ingredients(request):
     ingridient_values = {}
     ingridient_units = {}
 
-    ingredients = []
     know_ingredients = set()
+    ingredients = []
 
     if not request.POST:
         return []
@@ -113,35 +149,12 @@ def _get_ingredients(request):
 
     for key, name in ingridient_names.items():
         new_item = {
-                'name': name,
-                'value': ingridient_values.get(key),
-                'units': ingridient_units.get(key)
-            }
-
-        ingredient_serializer = IngredientInputSerializer(data={
-            'name': new_item['name'],
-            'units': new_item['units'],
-        })
-        if not ingredient_serializer.is_valid():
-            error_message = (
-                f'Неверное описание ингредиента "{name}"'
-            )
-            return None, error_message
-        
-        if not Ingredient.objects.filter(name=name).exists():
-            error_message = (
-                f'В базе данных нет ингредиента "{name}"'
-            )
-            return None, error_message
-
-        quanity_serializer = IngredientQuanityInputSerializer(data={
-            'value': new_item['value']
-        })
-
-        if not quanity_serializer.is_valid():
-            error_message = (
-                f'Неправильное количество ингредиента "{name}"'
-            )
+            'name': name,
+            'value': ingridient_values.get(key),
+            'units': ingridient_units.get(key)
+        }
+        error_message = _validate_ingredients(new_item)
+        if error_message is not None:
             return None, error_message
 
         if name in know_ingredients:
@@ -193,7 +206,7 @@ def _process_recipe_form(request, message, instance, nav_page, new):
             form.add_error(None, error)
         elif not ingredients:
             error = 'В форме должны быть ингредиенты'
-        
+
         if error is None:
             _save_recipe(form, request.user, ingredients, instance)
             messages.add_message(request, messages.INFO, message)
