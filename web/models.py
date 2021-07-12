@@ -10,12 +10,12 @@ class Ingredient(models.Model):
     units = models.CharField(
         'Единица измерения',
         max_length=200,
-        help_text='Единица измерения ингридента. Обязательно к заполнению.'
+        help_text='Единица измерения ингредиента. Обязательно к заполнению.'
     )
 
     class Meta:
-        verbose_name = 'Ингридиент'
-        verbose_name_plural = 'Ингридиенты'
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
 
     def __str__(self):
         return self.name
