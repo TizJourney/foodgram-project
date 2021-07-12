@@ -176,6 +176,7 @@ def follow_view(request):
         request.user.subscribed_to_user
         .filter(subscriber=request.user)
         .prefetch_related('author__recipes')
+        .order_by('-pub_date')
     )
 
     paginator = Paginator(follow_query, FOLLOW_PER_PAGE)
