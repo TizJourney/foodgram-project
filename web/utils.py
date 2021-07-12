@@ -155,6 +155,13 @@ def _process_recipe_form(request, message, instance, nav_page, new):
             _save_recipe(form, request.user, ingredients, instance)
             messages.add_message(request, messages.INFO, message)
             return redirect('index')
+
+        # пересоздать формы не прошедшую валидацию
+        form = RecipeForm(
+            request.POST or None,
+            files=request.FILES or None,
+            instance=instance or None
+        )
         form.add_error(None, 'В форме должны быть ингридиенты')
 
     return render(
