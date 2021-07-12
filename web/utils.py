@@ -91,7 +91,7 @@ def _validate_ingredients(new_item):
     '''
     Проверка данных формы на валидность для специального поля ингердиентов
     '''
-    
+
     name = new_item['name']
     ingredient_serializer = IngredientInputSerializer(data={
         'name': new_item['name'],
