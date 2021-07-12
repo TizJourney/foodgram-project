@@ -28,6 +28,7 @@ const configButton = {
 }
 const purchases = new Purchases(configButton.purchases, api);
 const favorites = new Favorites(configButton.favorites, api);
+const subscribe = new Subscribe(configButton.subscribe, api);
 
 const cardList = new CardList(container, '.card', header, api, true, {
     purchases,

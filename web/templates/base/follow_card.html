@@ -24,6 +24,6 @@
             </ul>
         </div>
         <div class="card-user__footer">
-            <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+            {% include 'base/subscribeButton.html' with is_subscribed=True %}
         </div>
     </div>    
